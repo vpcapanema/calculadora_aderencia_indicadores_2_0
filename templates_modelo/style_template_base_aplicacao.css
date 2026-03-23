@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+body.app-template-page {
+  --app-template-demo-soft: rgba(17, 101, 147, 0.04);
+}
+
+.app-template-page .app-template-summary-card:first-child {
+  background: linear-gradient(180deg, var(--app-template-demo-soft), #ffffff);
+}
+
+.app-template-page .app-template-panel-card:last-child {
+  background: linear-gradient(180deg, rgba(62, 194, 110, 0.04), #ffffff);
+}

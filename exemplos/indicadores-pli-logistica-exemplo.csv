@@ -1,0 +1,21 @@
+# =====================================================================
+# CALCULADORA DE ADERÊNCIA METODOLÓGICA 2.0 — CSV DE EXEMPLO
+# Plano Logístico Integrado (PLI) — Indicadores de Logística e Infraestrutura
+# =====================================================================
+# Como usar:
+#   1. Acesse home.html e clique em "Selecionar arquivo CSV"
+#   2. Selecione este arquivo ou arraste para a zona de upload
+#   3. Avance para a etapa de avaliação e atribua notas (0–5) por critério
+#   4. Consolide os resultados para gerar o índice de aderência (IA)
+# =====================================================================
+# Cabeçalho obrigatório: indicador,descricao,area,unidade_medida,fonte
+# =====================================================================
+indicador,descricao,area,unidade_medida,fonte
+Taxa de Movimentação Portuária,"Volume total de cargas movimentadas nos portos organizados brasileiros, incluindo cargas de longo curso e cabotagem. Reflete a intensidade do fluxo logístico marítimo nacional.",Infraestrutura Portuária,Toneladas/ano,ANTAQ — Anuário Estatístico Aquaviário
+Densidade da Malha Ferroviária,"Extensão total das ferrovias em operação comercial em relação à área territorial da unidade de análise. Indica a cobertura e capilaridade da modal ferroviária no território.",Infraestrutura Ferroviária,Km de ferrovia / 1.000 km²,ANTT — Sistema de Acompanhamento de Concessões
+Tempo Médio de Desembaraço Aduaneiro,"Tempo médio, em horas, entre o registro da Declaração de Importação (DI) e o desembaraço aduaneiro na Receita Federal. Afeta diretamente o custo logístico e a competitividade do comércio exterior.",Eficiência Operacional,Horas,Receita Federal — SISCOMEX / Tempo do Despacho
+Índice de Pavimentação Rodoviária,"Proporção da malha rodoviária federal e estadual com superfície pavimentada em relação ao total da rede. Indicador de qualidade e funcionalidade da infraestrutura viária.",Infraestrutura Rodoviária,% da malha total,DNIT — Sistema Nacional de Viação (SNV)
+Custo do Frete Rodoviário por Tonelada-Km,"Preço médio cobrado pelo serviço de transporte rodoviário de cargas por unidade de tonelada-quilômetro rodada. Proxy central dos custos logísticos no modal dominante do Brasil.",Custos Logísticos,R$/ton.km,CNT / ANTT — TACO (Tabela de Custos Operacionais)
+Taxa de Sinistralidade Rodoviária de Cargas,"Número de acidentes graves envolvendo veículos de carga por bilhão de toneladas-km transportadas. Indicador de segurança e confiabilidade do modal rodoviário.",Segurança Viária,Acidentes graves / bilhão de ton.km,PRF — Boletins de Acidentes de Trânsito
+Índice de Ruptura de Estoque nas Plataformas Logísticas,"Frequência média de ocorrências de ruptura de estoque registradas em plataformas logísticas e centros de distribuição monitorados. Capta ineficiências no planejamento da cadeia de suprimentos.",Eficiência da Cadeia de Suprimentos,Ocorrências/mês por plataforma,ILOS — Instituto de Logística e Supply Chain
+Emissão de CO₂ por Tonelada Transportada,"Volume médio de dióxido de carbono equivalente emitido por tonelada de carga transportada, ponderado pela participação modal na matriz logística. Indicador de sustentabilidade ambiental do sistema logístico.",Sustentabilidade Logística,kg CO₂eq / ton transportada,IBGE — Inventário Nacional de Emissões / EPE

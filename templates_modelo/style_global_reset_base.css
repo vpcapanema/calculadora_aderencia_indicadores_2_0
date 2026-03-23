@@ -1,0 +1,3976 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Roboto:wght@300;400;500;700&display=swap");
+
+/* SIGMA-PLI - CSS Base Global - VERSÃO PLI-SP 2050 */
+/* Arquivo: style_global_reset_base.css */
+/* Paleta e tipografia alinhadas ao design system pli.semil.sp.gov.br */
+/* Backup disponível em: style_global_reset_base.BACKUP_2026-02-21.css */
+
+/* ── VARIÁVEL GLOBAL DE LARGURA DE PÁGINA ────────────────────────
+   @property registra --sigma-page-max-width com tipo e valor inicial.
+   Isso garante:
+   1. Fallback inquebrável (initial-value) caso ninguém declare a var
+   2. Tipagem (<length>) — impede valores inválidos
+   3. Herança (inherits: true) — todos os filhos enxergam o valor
+   Para alterar a largura de TODAS as páginas, mude APENAS o valor
+   abaixo (initial-value) E na declaração :root logo em seguida.
+   A proteção real contra sobreposição é feita via !important nos
+   seletores de layout (.sigma-main, .vw-main, .card-main, etc.).
+   ─────────────────────────────────────────────────────────────── */
+@property --sigma-page-max-width {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 1340px;
+}
+
+:root {
+  /* Cores principais — alinhadas ao Design System PLI-SP 2050
+     Referência: pli.semil.sp.gov.br (tokens consolidados neste arquivo)
+     ─────────────────────────────────────────────────────────────
+     Antes (SIGMA orig.)   →   Agora (PLI-SP 2050)
+     --sigma-verde   #0e540e → #3EC26E  (verde acento PLI)
+     --sigma-azul    #0a296c → #1C3D59  (azul marinho PLI)
+     --sigma-primary #0f203e → #003B5A  (azul profundo PLI)
+     --sigma-secondary #244b72 → #1C3D59 (azul marinho PLI)
+
+main,
+main[class*="-main"] {
+  background: var(--sigma-page-background) !important;
+  padding: 0 !important;
+}
+     --sigma-accent  #12559c → #116593  (azul médio PLI)
+     --sigma-success #245f24 → #2aa358  (verde escuro PLI)
+     --sigma-info    #244b72 → #116593  (azul médio PLI)
+  */
+  --sigma-verde: #3ec26e; /* PLI green acento                            */
+  --sigma-azul: #1c3d59; /* PLI navy                                    */
+  --sigma-primary: #003b5a; /* PLI deep (azul profundo — bg escuro)        */
+  --sigma-secondary: #1c3d59; /* PLI navy (azul marinho)                     */
+  --sigma-accent: #116593; /* PLI blue (azul médio — botões, links)       */
+  --sigma-success: #2aa358; /* PLI green-dark (verde escuro)               */
+  --sigma-warning: #f39c12; /* Amarelo — mantido da referência original    */
+  --sigma-error: #c0392b; /* Vermelho — atualizado para PLI              */
+  --sigma-info: #116593; /* PLI blue                                    */
+
+  /* Admin accent — padrão único (vermelho fosco) */
+  --admin-accent: #b03a2e;
+  --admin-accent-light: #c0504d;
+  --admin-accent-dark: #8b2e24;
+
+  /* Variáveis nativas PLI — disponíveis globalmente para todos os módulos */
+  --pli-navy: #1c3d59;
+  --pli-deep: #003b5a;
+  --pli-blue: #116593;
+  --pli-cyan: #16539c;
+  --pli-green: #3ec26e;
+  --pli-green-dark: #2aa358;
+  --pli-white: #ffffff;
+  --pli-gray-light: #f2f2f2;
+  --pli-gray-bg: #f0f0f1;
+  --pli-text: #212529;
+  --pli-text-muted: #444444;
+
+  /* ── Overlays PLI ──────────────────────────────────────── */
+  --pli-overlay-50: rgba(255, 255, 255, 0.5);
+  --pli-overlay-80: rgba(255, 255, 255, 0.8);
+  --pli-dark-overlay: rgba(0, 59, 90, 0.85);
+
+  /* ── Cores semânticas PLI ──────────────────────────────── */
+  --pli-success: #2aa358;
+  --pli-warning: #f39c12;
+  --pli-error: #c0392b;
+  --pli-info: #116593;
+
+  /* Cores de grupo (M03) — centralizadas para evitar duplicação entre folhas */
+  --cor-grupo-arquivo: #2563eb;
+  --cor-grupo-arquivo-rgb: 37, 99, 235;
+  --cor-grupo-produtor: #059669;
+  --cor-grupo-produtor-rgb: 5, 150, 105;
+  --cor-grupo-estrutura: #d97706;
+  --cor-grupo-estrutura-rgb: 217, 119, 6;
+  --cor-grupo-conteudo: #7c3aed;
+  --cor-grupo-conteudo-rgb: 124, 58, 237;
+
+  /* ── Famílias tipográficas PLI ─────────────────────────── */
+  --pli-font-primary: "Montserrat", Verdana, sans-serif;
+  --pli-font-secondary: "Roboto", Arial, sans-serif;
+
+  /* ── Escala de tamanhos PLI (pli.semil.sp.gov.br) ──────── */
+  --pli-fs-xs: 0.8125rem; /* 13px  */
+  --pli-fs-sm: 0.875rem; /* 14px  */
+  --pli-fs-base: 1rem; /* 16px  */
+  --pli-fs-md: 1.1rem; /* 17.6px */
+  --pli-fs-nav: 1rem; /* 16px  */
+  --pli-fs-h3: 1rem; /* 16px  */
+  --pli-fs-h4: 1.45rem; /* 23.2px */
+  --pli-fs-h2: 1.5rem; /* 24px  */
+  --pli-fs-h1: 1.875rem; /* 30px  */
+  --pli-fs-xl: 2.25rem; /* 36px  */
+  --pli-fs-2xl: 2.625rem; /* 42px  */
+
+  /* ── Pesos tipográficos PLI ────────────────────────────── */
+  --pli-fw-light: 300;
+  --pli-fw-regular: 400;
+  --pli-fw-medium: 500;
+  --pli-fw-semibold: 600;
+  --pli-fw-bold: 700;
+  --pli-fw-extrabold: 800;
+
+  /* ── Line-height PLI ───────────────────────────────────── */
+  --pli-lh-tight: 1.05;
+  --pli-lh-snug: 1.3;
+  --pli-lh-normal: 1.5;
+  --pli-lh-relaxed: 1.7;
+  --pli-lh-loose: 1.75;
+
+  /* ── Espaçamento PLI (grid 0.44 → 5.06rem) ────────────── */
+  --pli-space-xs: 0.44rem;
+  --pli-space-sm: 0.67rem;
+  --pli-space-md: 1rem;
+  --pli-space-lg: 1.5rem;
+  --pli-space-xl: 2.25rem;
+  --pli-space-2xl: 3.38rem;
+  --pli-space-3xl: 5.06rem;
+
+  /* ── Bordas e sombras PLI ──────────────────────────────── */
+  --pli-radius-sm: 4px;
+  --pli-radius-md: 8px;
+  --pli-radius-lg: 16px;
+  --pli-shadow-card: 0px 4px 20px rgba(0, 0, 0, 0.12);
+  --pli-shadow-hover: 0px 8px 32px rgba(28, 61, 89, 0.25);
+  --pli-shadow-btn: 0px 2px 8px rgba(17, 101, 147, 0.35);
+
+  /* ── Transições PLI ────────────────────────────────────── */
+  --pli-transition-base: 0.3s ease;
+  --pli-transition-btn: 0.3s;
+  --pli-transition-widget:
+    background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s,
+    transform 0.4s;
+
+  /* ── Gradientes PLI ────────────────────────────────────── */
+  --pli-gradient-hero: linear-gradient(
+    160deg,
+    #003b5a 0%,
+    #1c3d59 38%,
+    rgba(28, 61, 89, 0.08) 72%,
+    #ffffff 100%
+  );
+  --pli-gradient-btn: linear-gradient(135deg, #116593 0%, #1c3d59 100%);
+  --pli-gradient-footer: linear-gradient(180deg, #003b5a 0%, #1c3d59 100%);
+
+  /* Gradientes Padrão SIGMA-PLI (mínimo 5 cores) */
+  --sigma-gradient-radial: radial-gradient(
+    circle at center,
+    #083208 0%,
+    /* Verde escuro */ #2a5a2a 25%,
+    /* Verde médio */ #ffffff 50%,
+    /* Branco central */ #3b5a8f 75%,
+    /* Azul médio */ #07193f 100% /* Azul escuro */
+  );
+
+  --sigma-gradient-cinza-azul: linear-gradient(
+    90deg,
+    #cccecf 0%,
+    #96a6b7 25%,
+    #616e81 50%,
+    #2d4a6d 75%,
+    #07193f 100%
+  );
+
+  --sigma-gradient-cinza-azul-radial:
+    radial-gradient(
+      circle at left top,
+      #07193f 0%,
+      #2d4a6d 25%,
+      #616e81 50%,
+      #96a6b7 75%,
+      #cccecf 100%
+    ),
+    radial-gradient(
+      circle at right bottom,
+      #07193f 0%,
+      #2d4a6d 25%,
+      #616e81 50%,
+      #96a6b7 75%,
+      #cccecf 100%
+    );
+
+  --sigma-gradient-verde-azul: linear-gradient(
+    135deg,
+    /* Verde escuro */ #083208 0%,
+    /* Verde Claro */ #1a7f5a 25%,
+    /* Verde zulado intermediário */ #0e6d8f 50%,
+    /* Azul claro */ #2c5aa0 75%,
+    /* Azul escuro */ #07193f 100%
+  );
+
+  /* Tons de cinza */
+  --sigma-gray-50: #f7fafc;
+  --sigma-gray-100: #edf2f7;
+  --sigma-gray-200: #e2e8f0;
+  --sigma-gray-300: #cbd5e0;
+  --sigma-gray-400: #a0aec0;
+  --sigma-gray-500: #718096;
+  --sigma-gray-600: #4a5568;
+  --sigma-gray-700: #2d3748;
+  --sigma-gray-800: #1a202c;
+  --sigma-gray-900: #171923;
+
+  /* Espaçamentos */
+  --spacing-xs: 0.2875rem;
+  --spacing-sm: 0.575rem;
+  --spacing-md: 1.15rem;
+  --spacing-lg: 1.725rem;
+  --spacing-xl: 2.3rem;
+  --spacing-2xl: 2.875rem;
+
+  --border-radius-sm: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 22px;
+
+  /* Sombras */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 6px 32px rgba(0, 0, 0, 0.1);
+
+  /* Tipografia — alinhada ao Design System PLI-SP 2050
+     Referência: pli.semil.sp.gov.br (tokens consolidados neste arquivo)
+     ─────────────────────────────────────────────────────────────
+     Âncoras PLI observadas: 13, 14, 16, 17.6, 23.2, 24, 30, 36, 42px
+  */
+  --font-family: "Montserrat", Verdana, sans-serif;
+  --font-family-secondary: "Roboto", Arial, sans-serif;
+  --sigma-type-caption: 0.8125rem;
+  --sigma-type-label: 0.875rem;
+  --sigma-type-body-sm: 0.9375rem;
+  --sigma-type-body: 1rem;
+  --sigma-type-body-lg: 1.125rem;
+  --sigma-type-title-xs: 1rem;
+  --sigma-type-title-sm: 1.125rem;
+  --sigma-type-title-md: 1.25rem;
+  --sigma-type-title-lg: 1.5rem;
+  --sigma-type-title-xl: 1.875rem;
+  --sigma-type-display-sm: clamp(2rem, 3vw, 2.5rem);
+  --sigma-type-display-md: clamp(2.375rem, 5vw, 3.5rem);
+  /* Alias usado por algumas páginas/módulos */
+  --font-size-xs: var(--sigma-type-caption);
+  --font-size-sm: var(--sigma-type-label);
+  --font-size-base: var(--sigma-type-body);
+  --font-size-lg: var(--sigma-type-body-lg);
+  --font-size-xl: var(--sigma-type-title-md);
+  --font-size-2xl: var(--sigma-type-title-lg);
+  --font-size-3xl: var(--sigma-type-title-xl);
+  --font-size-4xl: var(--sigma-type-display-sm);
+
+  /* Layout — largura de página global
+     ⚠ FONTE ÚNICA: altere SOMENTE --sigma-page-max-width para mudar
+     a largura de todas as páginas. --container-max-width é alias.
+     O valor é protegido por @property + !important nos containers. */
+  --sigma-page-max-width: 1600px;
+  --container-max-width: var(--sigma-page-max-width);
+  --header-height: 64px;
+
+  /* Modais — larguras padronizadas (NÃO usar --sigma-page-max-width)
+     Escala própria, independente da largura de página.
+     Módulos podem usar estas variáveis em .modal-dialog / .modal-content. */
+  --sigma-modal-sm: 400px; /* Confirmações, alertas compactos   */
+  --sigma-modal-md: 600px; /* Formulários padrão, default       */
+  --sigma-modal-lg: 800px; /* Formulários complexos, detalhes   */
+  --sigma-modal-xl: 1000px; /* Tabelas, multi-coluna, dashboards */
+
+  /* Background padrão da página (usado por páginas públicas) — PLI: #F0F0F1 */
+  --sigma-page-background: #f0f0f1;
+
+  /* Dashboard/Tema Escuro - Variáveis */
+  --dashboard-bg: #0b1729;
+  --dashboard-panel: #111f36;
+  --dashboard-panel-alt: #162a48;
+  --dashboard-text: #e9f1ff;
+  --dashboard-muted: #9fb3d2;
+  --dashboard-accent: #2c8fff;
+  --dashboard-accent-hover: #5aa8ff;
+  --dashboard-border: rgba(233, 241, 255, 0.12);
+  --dashboard-disabled: rgba(233, 241, 255, 0.18);
+  /* Navbar */
+  --navbar-bg-solid: #f2f2f2;
+  --navbar-border: #e0e0e0;
+  --navbar-text: #212529;
+  --navbar-text-muted: #212529;
+  --navbar-text-hover: #212529;
+  --navbar-accent: #116593; /* PLI blue — era #2c8fff */
+  --navbar-accent-hover: #3ec26e; /* PLI green — era #5aa8ff */
+  --navbar-accent-glow: rgba(
+    62,
+    194,
+    110,
+    0.3
+  ); /* PLI green glow — era rgba(44,143,255,0.3) */
+  --navbar-height-mobile: 60px;
+  --navbar-max-width: 1600px;
+  /* Espaçamento padrão entre navbar e containers/conteúdo (de responsabilidade da navbar) */
+  /* Altura da barra de informações de sessão (exibida abaixo da navbar) */
+  --session-bar-height: 26px;
+  /* Offset TOTAL da navbar (altura + session-bar + espaçamento) - UMA ÚNICA variável simples, sem calc() */
+  --navbar-total-offset: 96px; /* 54px (navbar-height) + 26px (session-bar) + 16px (navbar-spacing-bottom) */
+
+  /* Footer */
+  --footer-spacing-top: var(--spacing-md);
+  --sigma-page-header-clearance-base: var(--pli-space-lg);
+  --sigma-page-footer-clearance-base: var(--pli-space-xl);
+
+  /* Card intro defaults - pages may override by setting these vars */
+  --card-intro-bg: #ffffff;
+  --card-intro-padding-y: var(--spacing-2xl);
+  --card-intro-padding-x: var(--spacing-xl);
+  --card-intro-radius: var(--border-radius-lg);
+  --card-intro-border: var(--dashboard-border);
+}
+
+/* ============================================
+   VW-PAGE: Tokens de cor para páginas que usam
+   template_base_vw_pagina.html (body.vw-page)
+   Espelha os mesmos tokens de .dicionario-view-page
+   para que os componentes vw-* funcionem corretamente.
+   ============================================ */
+.vw-page {
+  /* Surface & background */
+  --vw-bg: var(--pli-gray-bg, #f0f0f1);
+  --vw-surface: var(--pli-white, #ffffff);
+
+  /* Borders */
+  --vw-border: var(--sigma-gray-200, #e2e8f0);
+  --vw-border-strong: var(--sigma-gray-300, #cbd5e0);
+
+  /* Texto */
+  --vw-text: var(--pli-navy, #1c3d59);
+  --vw-text-muted: var(--pli-text-muted, #444444);
+
+  /* Acento */
+  --vw-accent: var(--pli-navy, #1c3d59);
+  --vw-accent-light: rgba(28, 61, 89, 0.07);
+
+  /* Verde */
+  --vw-green: var(--pli-green, #3ec26e);
+  --vw-green-light: rgba(62, 194, 110, 0.08);
+
+  /* Raios */
+  --vw-radius: var(--pli-radius-md, 8px);
+  --vw-radius-sm: var(--pli-radius-sm, 4px);
+  --vw-radius-pill: 100px;
+
+  /* Sombras */
+  --vw-shadow: var(--pli-shadow-card, 0px 4px 20px rgba(0, 0, 0, 0.12));
+  --vw-shadow-lg: var(--pli-shadow-hover, 0px 8px 32px rgba(28, 61, 89, 0.25));
+
+  /* Transição */
+  --vw-transition: 180ms ease;
+
+  /* Cores dos grupos (usados nos vw-pill de grupo) */
+  --vw-grupo-arquivo: #4a7fc7;
+  --vw-grupo-produtor: #3d9e7e;
+  --vw-grupo-estrutura: #c4882e;
+  --vw-grupo-conteudo: #8869b8;
+
+  background: var(--vw-bg);
+  min-height: 100vh;
+  font-family: var(--pli-font-primary, "Montserrat", sans-serif);
+  color: var(--vw-text);
+  font-size: var(--pli-fs-sm, 0.875rem);
+}
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--pli-lh-normal);
+  color: var(--sigma-gray-800);
+  background: var(--sigma-page-background);
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  --sigma-page-header-clearance: var(--sigma-page-header-clearance-base);
+  --sigma-page-footer-clearance: var(--sigma-page-footer-clearance-base);
+}
+
+body.has-sigma-navbar {
+  --sigma-page-header-clearance: calc(
+    var(--navbar-total-offset, 96px) + var(--pli-space-lg, 1.5rem)
+  );
+}
+
+/* ============================================
+   TIPOGRAFIA GLOBAL — PADRÃO PLI-SP 2050
+   Tamanho, tipo e cor de fonte padronizados.
+   Textos centralizados no elemento contenedor.
+   ============================================ */
+
+/* Headings — hierarquia visual PLI */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--pli-font-primary);
+  font-weight: var(--pli-fw-bold);
+  line-height: var(--pli-lh-snug);
+  color: var(--pli-navy);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: var(--pli-space-sm);
+}
+
+h1 {
+  font-size: var(--sigma-type-title-xl);
+  font-weight: var(--pli-fw-extrabold);
+  color: var(--pli-deep);
+}
+
+h2 {
+  font-size: var(--sigma-type-title-lg);
+  font-weight: var(--pli-fw-bold);
+  color: var(--pli-navy);
+}
+
+h3 {
+  font-size: var(--sigma-type-title-md);
+  font-weight: var(--pli-fw-semibold);
+  color: var(--pli-navy);
+}
+
+h4 {
+  font-size: var(--sigma-type-title-sm);
+  font-weight: var(--pli-fw-semibold);
+  color: var(--pli-blue);
+}
+
+h5 {
+  font-size: var(--sigma-type-title-xs);
+  font-weight: var(--pli-fw-medium);
+  color: var(--pli-blue);
+}
+
+h6 {
+  font-size: var(--sigma-type-label);
+  font-weight: var(--pli-fw-medium);
+  color: var(--pli-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Parágrafos — corpo de texto centralizado */
+p {
+  font-family: var(--pli-font-secondary);
+  font-size: var(--sigma-type-body);
+  font-weight: var(--pli-fw-regular);
+  line-height: var(--pli-lh-relaxed);
+  color: var(--pli-text);
+  text-align: center;
+  margin-bottom: var(--pli-space-sm);
+}
+
+/* Labels de formulário — alinhados à esquerda por usabilidade */
+label {
+  font-family: var(--pli-font-primary);
+  font-size: var(--sigma-type-label);
+  font-weight: var(--pli-fw-semibold);
+  color: var(--pli-navy);
+  text-align: left;
+  display: block;
+  margin-bottom: var(--pli-space-xs);
+}
+
+/* Links */
+a {
+  font-family: inherit;
+  color: var(--pli-blue);
+  text-decoration: none;
+  transition: color var(--pli-transition-base);
+}
+
+a:hover {
+  color: var(--pli-navy);
+}
+
+/* Listas — texto centralizado */
+ul,
+ol {
+  font-family: var(--pli-font-secondary);
+  font-size: var(--font-size-base);
+  color: var(--pli-text);
+  text-align: center;
+  list-style-position: inside;
+}
+
+li {
+  line-height: var(--pli-lh-relaxed);
+}
+
+/* Small / caption / legenda */
+small,
+.text-small,
+caption,
+figcaption {
+  font-family: var(--pli-font-secondary);
+  font-size: var(--font-size-xs); /* 13px */
+  font-weight: var(--pli-fw-regular);
+  color: var(--pli-text-muted);
+  text-align: center;
+}
+
+/* Texto dentro de botões mantém família primária */
+button,
+.btn {
+  font-family: var(--pli-font-primary);
+}
+
+/* ── Utilitários de alinhamento de texto ───────────────── */
+/* Padrão: texto justificado em parágrafos e conteúdo geral */
+.text-justify {
+  text-align: justify !important;
+}
+.text-left {
+  text-align: left !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-right {
+  text-align: right !important;
+}
+
+/* ── Utilitários de cor de texto PLI ───────────────────── */
+.text-pli-navy {
+  color: var(--pli-navy) !important;
+}
+.text-pli-deep {
+  color: var(--pli-deep) !important;
+}
+.text-pli-blue {
+  color: var(--pli-blue) !important;
+}
+.text-pli-green {
+  color: var(--pli-green) !important;
+}
+.text-pli-muted {
+  color: var(--pli-text-muted) !important;
+}
+.text-pli-white {
+  color: var(--pli-white) !important;
+}
+
+/* ── Utilitários de tamanho de fonte PLI ───────────────── */
+.fs-xs {
+  font-size: var(--font-size-xs) !important;
+}
+.fs-sm {
+  font-size: var(--font-size-sm) !important;
+}
+.fs-base {
+  font-size: var(--font-size-base) !important;
+}
+.fs-lg {
+  font-size: var(--font-size-lg) !important;
+}
+.fs-xl {
+  font-size: var(--font-size-xl) !important;
+}
+.fs-2xl {
+  font-size: var(--font-size-2xl) !important;
+}
+.fs-3xl {
+  font-size: var(--font-size-3xl) !important;
+}
+.fs-4xl {
+  font-size: var(--font-size-4xl) !important;
+}
+
+/* ── Utilitários de peso de fonte PLI ──────────────────── */
+.fw-light {
+  font-weight: var(--pli-fw-light) !important;
+}
+.fw-regular {
+  font-weight: var(--pli-fw-regular) !important;
+}
+.fw-medium {
+  font-weight: var(--pli-fw-medium) !important;
+}
+.fw-semibold {
+  font-weight: var(--pli-fw-semibold) !important;
+}
+.fw-bold {
+  font-weight: var(--pli-fw-bold) !important;
+}
+
+/* ============================================
+   PÁGINAS PÚBLICAS COM GRADIENTE INSTITUCIONAL
+   Aplique a classe 'public-page-gradient' no body
+   ============================================ */
+body.public-page-gradient,
+body.dashboard-body.public-page-gradient,
+body.has-sigma-navbar.public-page-gradient {
+  background: var(--sigma-page-background) !important;
+  background-attachment: scroll !important;
+}
+
+/* Utilitários de layout */
+.container {
+  max-width: var(--sigma-page-max-width) !important;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* ============================================
+   CARD-MAIN: Container principal de conteúdo
+   Usado em páginas públicas M00/M01
+   ============================================ */
+.card-main {
+  width: 85vw;
+  max-width: var(--sigma-page-max-width) !important;
+  margin: var(--spacing-lg) auto;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e0;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  color: #1a202c;
+  overflow: visible;
+}
+
+/* Card Intro (pages can apply .card-intro to consume these vars) */
+.card-main.card-intro {
+  background: var(--card-intro-bg);
+  padding: var(--card-intro-padding-y) var(--card-intro-padding-x);
+  border-radius: var(--card-intro-radius);
+  border-bottom: 1px solid var(--card-intro-border);
+  box-sizing: border-box;
+  /* Make intro cards align with the global container width by default */
+  width: 100%;
+  max-width: var(--sigma-page-max-width) !important;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1; /* ensure the header (higher z-index) remains above */
+  /* Inherit hero-like layout behaviour (previously applied via .hero-section) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Progressos de cadastro (cu-progress): padrão global em card */
+.cu-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: var(--sigma-page-max-width) !important;
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-md) var(--spacing-lg);
+  box-sizing: border-box;
+  background-color: var(--pli-white, #ffffff);
+  border: 1px solid #cbd5e0;
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Variações M03 (Upload/Batch): padronização global de posicionamento */
+.sigma-main > .wizard-progress.cu-progress,
+.sigma-main .batch-wizard > .batch-progress.cu-progress {
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.sigma-main .batch-wizard > .batch-progress.cu-progress {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* M03 Upload: aparência completa do progresso (global, conteúdo livre) */
+.wizard-progress.cu-progress .wizard-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 70px;
+  width: 70px;
+  flex: 0 0 70px;
+}
+
+.wizard-progress.cu-progress .step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.wizard-progress.cu-progress .wizard-step.active .step-number {
+  background: linear-gradient(135deg, #003b5a, #1c3d59);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(28, 61, 89, 0.3);
+}
+
+.wizard-progress.cu-progress .wizard-step.completed .step-number {
+  background: #3ec26e;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.wizard-progress.cu-progress .step-connector {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin-top: -18px;
+  transition: background 0.3s ease;
+  min-width: 20px;
+  max-width: 60px;
+}
+
+.wizard-progress.cu-progress .wizard-step.completed + .step-connector,
+.wizard-progress.cu-progress .step-connector.completed {
+  background: #3ec26e;
+}
+
+.wizard-progress.cu-progress .step-label {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.wizard-progress.cu-progress .wizard-step.active .step-label {
+  color: #1c3d59;
+}
+
+.wizard-progress.cu-progress .wizard-step.completed .step-label {
+  color: #2aa358;
+}
+
+/* M03 Batch: aparência completa do progresso (global, conteúdo livre) */
+.batch-progress.cu-progress .batch-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  position: relative;
+  min-width: 70px;
+  width: 70px;
+  flex: 0 0 70px;
+}
+
+.batch-progress.cu-progress .batch-progress__number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.batch-progress.cu-progress .batch-progress__label {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.batch-progress.cu-progress .batch-progress__connector {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin-top: -18px;
+  border-radius: 2px;
+  transition: background 0.3s ease;
+  min-width: 20px;
+  max-width: 60px;
+}
+
+.batch-progress.cu-progress
+  .batch-progress__step.active
+  .batch-progress__number {
+  background: linear-gradient(135deg, #003b5a, #1c3d59);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(28, 61, 89, 0.3);
+}
+
+.batch-progress.cu-progress
+  .batch-progress__step.active
+  .batch-progress__label {
+  color: #1c3d59;
+  font-weight: 600;
+}
+
+.batch-progress.cu-progress
+  .batch-progress__step.completed
+  .batch-progress__number {
+  background: var(--pli-green, #3ec26e);
+  color: #fff;
+}
+
+.batch-progress.cu-progress
+  .batch-progress__step.completed
+  .batch-progress__label {
+  color: #2aa358;
+}
+
+.batch-progress.cu-progress .batch-progress__connector.completed {
+  background: var(--pli-green, #3ec26e);
+}
+
+/* Navegação global do cu-progress: símbolo clicável */
+.cu-progress__number > .cu-progress__link,
+.wizard-progress.cu-progress .step-number > .cu-progress__link,
+.batch-progress.cu-progress .batch-progress__number > .cu-progress__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cu-progress__number > .cu-progress__link:focus-visible,
+.wizard-progress.cu-progress .step-number > .cu-progress__link:focus-visible,
+.batch-progress.cu-progress
+  .batch-progress__number
+  > .cu-progress__link:focus-visible {
+  outline: 2px solid var(--pli-blue, #116593);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .sigma-main .batch-wizard > .batch-progress.cu-progress {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .wizard-progress.cu-progress .step-connector {
+    display: none;
+  }
+
+  .batch-progress.cu-progress .batch-progress__connector {
+    min-width: 30px;
+  }
+}
+
+/* When a page has a fixed navbar, the .sigma-main needs padding-top
+   to account for the fixed navbar height. The .card-intro inside should NOT
+   have additional margin-top since .sigma-main already accounts for it. */
+body.has-sigma-navbar .card-main.card-intro {
+  /* Evita offset duplo: o wrapper (.sigma-main) já compensa a navbar */
+  margin-top: 0;
+}
+
+.card-main.card-intro .card-main {
+  background-color: #ffffff;
+  color: #1a202c;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-top: 4px !important;
+}
+
+.card-main h2,
+.card-main h3 {
+  margin-left: var(--spacing-sm);
+  color: #1a202c;
+  text-align: left;
+}
+
+/* ============================================
+   INFO NOTE — nota informativa reutilizável
+   ============================================ */
+.cf-info-note {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(17, 101, 147, 0.06);
+  border: 1px solid rgba(17, 101, 147, 0.12);
+  border-radius: var(--pli-radius-sm, 6px);
+  font-size: var(--pli-fs-xs, 0.8125rem);
+  color: var(--pli-text-muted, #64748b);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cf-info-note i {
+  color: var(--pli-blue, #116593);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   CARD SECTION PADRÃO (referência: fh-section)
+   ============================================ */
+.sigma-card-section,
+.fh-section {
+  background: var(--pli-white, #ffffff);
+  border: 0.5pt solid var(--pli-deep, #003b5a);
+  border-radius: var(--pli-radius-md, 8px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  --sigma-card-space-x: 14px;
+  --sigma-card-space-y: 12px;
+}
+
+.sigma-card-section__header,
+.fh-section__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 14px;
+  background: linear-gradient(
+    135deg,
+    var(--pli-deep, #003b5a),
+    var(--pli-navy, #1c3d59)
+  );
+  color: #ffffff;
+  font-family: var(--pli-font-primary, "Montserrat", Verdana, sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.sigma-card-section__header i,
+.fh-section__header i {
+  color: var(--pli-green, #3ec26e);
+  font-size: 0.85em;
+  line-height: 1;
+}
+
+.sigma-card-section__body,
+.fh-section__body {
+  padding: 1.2rem;
+}
+
+/* Aliases de cabeçalho para cards legados já marcados com .sigma-card-section */
+.sigma-card-section > .adm-panel__header,
+.sigma-card-section > .svh-section-header,
+.sigma-card-section > .ssc-card__header,
+.sigma-card-section > .ssc-conn-card__header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-height: 36px !important;
+  padding: 0 14px !important;
+  background: linear-gradient(
+    135deg,
+    var(--pli-deep, #003b5a),
+    var(--pli-navy, #1c3d59)
+  ) !important;
+  color: #ffffff !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.sigma-card-section > .adm-panel__header .adm-tab-title,
+.sigma-card-section > .svh-section-header .svh-section-title,
+.sigma-card-section > .ssc-card__header .ssc-card__title,
+.sigma-card-section > .ssc-conn-card__header .ssc-conn-card__title {
+  margin: 0 !important;
+  padding: 0 !important;
+  padding-bottom: 0 !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  font-family: var(
+    --pli-font-primary,
+    "Montserrat",
+    Verdana,
+    sans-serif
+  ) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+  text-align: left !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.sigma-card-section > .svh-section-header .svh-section-sub,
+.sigma-card-section > .ssc-card__header .ssc-card__desc {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.sigma-card-section > .adm-panel__header i,
+.sigma-card-section > .svh-section-header .svh-section-icon i,
+.sigma-card-section > .ssc-card__header .ssc-card__icon i,
+.sigma-card-section > .ssc-conn-card__header .ssc-conn-card__title i {
+  color: var(--pli-green, #3ec26e) !important;
+  font-size: 0.85em !important;
+  line-height: 1 !important;
+}
+
+.sigma-card-section > .svh-section-header .svh-section-icon,
+.sigma-card-section > .ssc-card__header .ssc-card__icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Espaçamento interno padrão (cards legados com sigma-card-section) */
+.sigma-card-section > .adm-panel__body,
+.sigma-card-section > .ssc-card__body,
+.sigma-card-section > .ssc-conn-card__body {
+  padding: var(--sigma-card-space-y) var(--sigma-card-space-x) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sigma-card-section > .adm-panel__footer,
+.sigma-card-section > .ssc-card__footer,
+.sigma-card-section > .ssc-conn-card__footer {
+  padding: calc(var(--sigma-card-space-y) - 2px) var(--sigma-card-space-x)
+    var(--sigma-card-space-y) !important;
+}
+
+.sigma-card-section > .svh-section-sub,
+.sigma-card-section > .svh-specs-grid,
+.sigma-card-section > .svh-nginx-card,
+.sigma-card-section > .svh-containers-grid,
+.sigma-card-section > .svh-docker-info {
+  margin-left: var(--sigma-card-space-x);
+  margin-right: var(--sigma-card-space-x);
+}
+
+.sigma-card-section > .svh-section-sub {
+  margin-top: var(--sigma-card-space-y);
+}
+
+.sigma-card-section > .svh-specs-grid,
+.sigma-card-section > .svh-nginx-card,
+.sigma-card-section > .svh-containers-grid,
+.sigma-card-section > .svh-docker-info {
+  margin-top: var(--sigma-card-space-y);
+  margin-bottom: var(--sigma-card-space-y);
+}
+
+/* ============================================
+   SEÇÕES: Layout comum para páginas públicas
+   ============================================ */
+section {
+  padding: 0;
+  margin: 0;
+}
+
+.hero-section {
+  display: none;
+} /* deprecated - replaced by .card-main.card-intro */
+
+.theory-section,
+.quick-links-section,
+.features-section,
+.status-section,
+.contact-section {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.container-fluid {
+  width: 100%;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+/* ============================================
+   SIGMA-MAIN: Conteúdo principal
+   Margem superior para não ficar atrás da navbar fixa
+   ============================================ */
+.sigma-main {
+  width: 100%;
+  max-width: var(--sigma-page-max-width) !important;
+  margin: 0 auto;
+  padding: 0 0 var(--sigma-page-footer-clearance);
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── REGRAS DE ESPAÇAMENTO NAVBAR → CONTEÚDO ──────────────
+   UMA única fonte de verdade: --navbar-total-offset (130px)
+   Cobre dois cenários:
+   1. Páginas que usam base.html  → .sigma-main recebe o padding
+   2. Páginas standalone que têm  → <main> sem .sigma-main
+      has-sigma-navbar no body       também recebe o padding
+   ───────────────────────────────────────────────────────── */
+
+/* Cenário 1: offset no sigma-main (UMA vez, via variável global) */
+body.has-sigma-navbar .sigma-main {
+  padding-top: 0 !important;
+}
+
+/* Cenário 2: pages standalone com <main> próprio (sem .sigma-main) */
+body.has-sigma-navbar
+  main:not(.sigma-main):not(.vw-main):not(.l-main):not(.page-main) {
+  padding-top: var(--sigma-page-header-clearance) !important;
+  padding-bottom: var(--sigma-page-footer-clearance) !important;
+}
+
+body:not(.has-sigma-navbar)
+  main:not(.sigma-main):not(.vw-main):not(.l-main):not(.page-main) {
+  padding-top: var(--sigma-page-header-clearance) !important;
+  padding-bottom: var(--sigma-page-footer-clearance) !important;
+}
+
+/* Garante que o primeiro filho direto do sigma-main não acumule
+   margin-top extra além do padding-top já controlado acima */
+body.has-sigma-navbar .sigma-main > *:first-child {
+  margin-top: 0;
+}
+
+/* Overrides globais de espaçamento solicitados */
+.sigma-navbar__container {
+  padding-bottom: 0 !important;
+}
+
+/* PAGE-MAIN: Container de páginas públicas */
+.page-main {
+  width: 100%;
+  /* Não aplicar offset aqui para evitar somar com o wrapper (.sigma-main) */
+  padding-top: 0;
+  padding-bottom: var(--sigma-page-footer-clearance);
+}
+
+/* Centralização de containers dentro do sigma-main */
+.sigma-main .container,
+.sigma-main .sigma-content {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Sobrescrita específica para .sigma-content com max-width menor (formulários) */
+.sigma-content {
+  max-width: 1000px !important;
+}
+
+.l-main {
+  width: 100%;
+  max-width: var(--sigma-page-max-width) !important;
+  margin: 0 auto;
+  padding: max(var(--sigma-page-header-clearance), var(--spacing-xl))
+    var(--spacing-md) max(var(--sigma-page-footer-clearance), var(--spacing-xl));
+}
+
+/* Botões base */
+.btn {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--sigma-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--sigma-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: var(--sigma-gray-200);
+  color: var(--sigma-gray-800);
+}
+
+.btn-secondary:hover {
+  background-color: var(--sigma-gray-300);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Estados de loading */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--sigma-gray-300);
+  border-radius: 50%;
+  border-top-color: var(--sigma-primary);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Corrige autocomplete dos navegadores */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: inherit;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+  background-color: transparent;
+}
+
+/* Validação de formulários */
+.form-control.is-valid {
+  border-color: var(--sigma-success);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid {
+  border-color: var(--sigma-error);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.validation-feedback {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 20px;
+  transition: all 0.2s ease;
+}
+
+/* Componente Sigma Header */
+.sigma-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--navbar-bg);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--navbar-border);
+  height: var(--navbar-height);
+}
+
+.sigma-navbar {
+  height: 100%;
+}
+
+.sigma-navbar__container {
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.sigma-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.sigma-navbar__brand-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.sigma-navbar__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.sigma-navbar__brand-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--navbar-text);
+  letter-spacing: 0.02em;
+}
+
+.sigma-navbar__brand-subtitle {
+  font-size: 0.6875rem;
+  color: var(--navbar-text-muted);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.sigma-navbar__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--navbar-border);
+  border-radius: 8px;
+  background: rgba(44, 143, 255, 0.1);
+  color: var(--navbar-text);
+  cursor: pointer;
+  transition: var(--navbar-transition);
+}
+
+.sigma-navbar__toggle:hover {
+  background: rgba(44, 143, 255, 0.2);
+  border-color: var(--navbar-accent);
+}
+
+.sigma-navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.sigma-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sigma-navbar__item {
+  position: relative;
+}
+
+.sigma-navbar__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--pli-deep, #003b5a) !important;
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: var(--navbar-transition);
+  white-space: nowrap;
+}
+
+.sigma-navbar__link i {
+  font-size: 0.9375rem;
+  color: var(--pli-green, #3ec26e);
+}
+
+.sigma-navbar__link:hover {
+  color: var(--pli-deep, #003b5a) !important;
+  background: rgba(28, 61, 89, 0.08);
+}
+
+.sigma-navbar__link--active {
+  color: var(--pli-deep, #003b5a) !important;
+  background: rgba(28, 61, 89, 0.1);
+}
+
+.sigma-navbar__link--active i {
+  opacity: 1;
+}
+
+.sigma-navbar__dropdown-toggle {
+  font-family: inherit;
+}
+
+.sigma-navbar__dropdown-arrow {
+  font-size: 0.625rem;
+  order: -1;
+  margin-left: 0;
+  margin-right: 0.25rem;
+  color: var(--pli-green, #3ec26e);
+  transition: transform var(--navbar-transition);
+}
+
+.sigma-navbar__item--open .sigma-navbar__dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.sigma-navbar__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  padding: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all var(--navbar-transition);
+  list-style: none;
+  margin: 0.5rem 0 0 0;
+  z-index: 100;
+}
+
+.sigma-navbar__item--open .sigma-navbar__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sigma-navbar__dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--pli-deep, #003b5a) !important;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: var(--navbar-transition);
+}
+
+.sigma-navbar__dropdown-link i {
+  font-size: 0.9375rem;
+  width: 1.25rem;
+  text-align: center;
+  color: var(--pli-green, #3ec26e);
+}
+
+.sigma-navbar__dropdown-link:hover {
+  color: #212529 !important;
+  background: rgba(28, 61, 89, 0.06);
+}
+
+.sigma-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.sigma-navbar__user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+}
+
+.sigma-navbar__user-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.sigma-navbar__user-role {
+  font-size: 0.6875rem;
+  color: #6c757d;
+  text-transform: capitalize;
+}
+
+.sigma-navbar__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.475rem 0.9rem; /* Reduzido 5% altura, 10% largura */
+  font-size: 0.75rem; /* Reduzido 15% de 0.875rem */
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: var(--navbar-transition);
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.sigma-navbar__btn--primary {
+  background: var(--navbar-accent);
+  color: #ffffff;
+}
+
+.sigma-navbar__btn--primary:hover {
+  background: var(--navbar-accent-hover);
+  box-shadow: 0 4px 16px var(--navbar-accent-glow);
+}
+
+.sigma-navbar__btn--logout {
+  background: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+  border: 1px solid rgba(108, 117, 125, 0.2);
+}
+
+.sigma-navbar__btn--logout:hover {
+  background: rgba(108, 117, 125, 0.18);
+  border-color: #6c757d;
+}
+
+.has-sigma-navbar {
+  /* Offset do header fica no wrapper (.sigma-main) */
+  padding-top: 0;
+}
+
+/* Sigma Header - fim da navbar */
+
+/* Componente Sigma Page Header */
+.sigma-page-header {
+  background: linear-gradient(
+    135deg,
+    var(--sigma-primary),
+    var(--sigma-secondary)
+  );
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+  color: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.sigma-page-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.sigma-page-header__title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.sigma-page-header__title h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+
+.sigma-page-header__icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sigma-page-header__icon i {
+  font-size: 24px;
+  color: white;
+}
+
+.sigma-page-header__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+  margin-bottom: var(--spacing-xs);
+}
+
+.sigma-page-header__breadcrumb a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.sigma-page-header__breadcrumb a:hover {
+  opacity: 0.7;
+}
+
+.sigma-page-header__breadcrumb span {
+  opacity: 0.7;
+}
+
+.sigma-page-header__subtitle {
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+  display: block;
+  margin-top: var(--spacing-xs);
+}
+
+.sigma-page-header__stats {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.sigma-stat {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: center;
+  min-width: 100px;
+}
+
+.sigma-stat__value {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  display: block;
+  color: white;
+}
+
+.sigma-stat__label {
+  font-size: var(--font-size-xs);
+  opacity: 0.9;
+  text-transform: uppercase;
+  color: white;
+}
+
+.sigma-page-header__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+/* Botões do Sigma Header */
+.sigma-page-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.sigma-page-header-btn--primary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.sigma-page-header-btn--primary:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.sigma-page-header-btn--secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sigma-page-header-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.sigma-page-header-btn--success {
+  background: var(--sigma-success);
+  color: white;
+}
+
+.sigma-page-header-btn--success:hover {
+  background: #1e4f1e;
+}
+
+/* ============================================
+   FERRAMENTAS HUB (MAIN CONTENT)
+   ========================================================================== */
+.ferramentas-main {
+  /* Espaçamento superior é responsabilidade do wrapper (.sigma-main) */
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: var(--spacing-2xl);
+  padding-left: 0;
+  min-height: calc(100vh - var(--navbar-height) - 100px);
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(177, 209, 245, 0.836),
+      rgba(11, 23, 41, 0.95) 60%
+    ),
+    linear-gradient(190deg, rgba(191, 213, 244, 0.95), rgba(9, 23, 44, 0.9));
+  color: var(--dashboard-text);
+}
+
+/* Hero Section */
+.card-main.ferramentas-intro {
+  text-align: center;
+  /* per-page card-intro variable overrides */
+  --card-intro-bg: linear-gradient(
+    135deg,
+    rgba(44, 143, 255, 0.15) 0%,
+    rgba(15, 32, 62, 0.9) 100%
+  );
+  --card-intro-padding-y: var(--spacing-2xl);
+  --card-intro-padding-x: var(--spacing-xl);
+  --card-intro-radius: var(--border-radius-lg);
+  --card-intro-border: var(--dashboard-border);
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-main.ferramentas-intro::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(44, 143, 255, 0.1) 0%,
+    transparent 70%
+  );
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.card-main.ferramentas-intro h1 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--dashboard-text);
+  position: relative;
+  z-index: 1;
+}
+
+.card-main.ferramentas-intro .hero-subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--dashboard-accent);
+  margin-bottom: var(--spacing-lg);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.card-main.ferramentas-intro .hero-description {
+  font-size: var(--font-size-base);
+  color: var(--dashboard-muted);
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+}
+
+/* Filter Buttons */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-2xl);
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 2px solid var(--dashboard-border);
+  background: rgba(22, 42, 72, 0.6);
+  color: var(--dashboard-text);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(44, 143, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+
+.filter-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.filter-btn:hover {
+  border-color: var(--dashboard-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44, 143, 255, 0.3);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--dashboard-accent), #1e5fa8);
+  border-color: var(--dashboard-accent);
+  color: white;
+  box-shadow: 0 4px 12px rgba(44, 143, 255, 0.4);
+}
+
+.filter-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Applications Grid */
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* App Card */
+.app-card {
+  background: rgba(22, 42, 72, 0.7);
+  border: 2px solid var(--dashboard-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.app-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dashboard-accent), #1e5fa8);
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Hover removido: .app-card não é um link */
+
+.app-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.app-icon {
+  width: 80px;
+  height: 80px;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-lg);
+  background: linear-gradient(
+    135deg,
+    rgba(44, 143, 255, 0.2),
+    rgba(15, 32, 62, 0.8)
+  );
+  border-radius: 50%;
+  border: 3px solid rgba(44, 143, 255, 0.3);
+}
+
+.app-icon svg {
+  color: var(--dashboard-accent);
+  width: 48px;
+  height: 48px;
+}
+
+/* Hover removido: .app-icon dentro de card não-link */
+
+.app-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--dashboard-text);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.app-description {
+  font-size: var(--font-size-sm);
+  color: var(--dashboard-muted);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  min-height: 90px;
+}
+
+/* Tags */
+.app-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.tag {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: rgba(44, 143, 255, 0.15);
+  border: 1px solid rgba(44, 143, 255, 0.3);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  color: var(--dashboard-accent);
+  font-weight: 600;
+}
+
+/* Hover removido: .tag dentro de card não-link */
+
+/* Botão de ação */
+.ferramentas-btn-primary {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--dashboard-accent), #1e5fa8);
+  color: white;
+  border: 2px solid var(--dashboard-accent);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ferramentas-btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.4s ease;
+}
+
+.ferramentas-btn-primary:hover::before {
+  left: 100%;
+}
+
+.ferramentas-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(44, 143, 255, 0.4);
+  border-color: #5ba3ff;
+}
+
+/* Quick Access Section */
+.quick-access-section {
+  margin: var(--spacing-2xl) 0;
+  padding: var(--spacing-xl);
+  background: rgba(22, 42, 72, 0.4);
+  border-radius: var(--border-radius-lg);
+  border: 2px solid var(--dashboard-border);
+}
+
+.quick-access-section h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  color: var(--dashboard-text);
+  font-size: var(--font-size-2xl);
+}
+
+.quick-access-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.quick-access-card {
+  background: rgba(22, 42, 72, 0.6);
+  border: 2px solid var(--dashboard-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  text-align: center;
+  text-decoration: none;
+  color: var(--dashboard-text);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.quick-access-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(44, 143, 255, 0.3);
+  border-color: var(--dashboard-accent);
+  background: rgba(44, 143, 255, 0.15);
+}
+
+.quick-access-card .quick-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dashboard-accent), #1e5fa8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-md);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.quick-access-card:hover .quick-icon {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 8px 20px rgba(44, 143, 255, 0.4);
+}
+
+.quick-access-card h4 {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--dashboard-text);
+  margin-bottom: var(--spacing-sm);
+}
+
+.quick-access-card p {
+  font-size: var(--font-size-sm);
+  color: var(--dashboard-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Info Section */
+.info-section {
+  margin-top: var(--spacing-2xl);
+  padding: var(--spacing-xl);
+  background: rgba(22, 42, 72, 0.4);
+  border-radius: var(--border-radius-md);
+  border-left: 4px solid var(--dashboard-accent);
+}
+
+.info-section h2 {
+  color: var(--dashboard-accent);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-2xl);
+}
+
+.info-section p {
+  line-height: 1.8;
+  color: var(--dashboard-text);
+  margin-bottom: var(--spacing-md);
+}
+
+.info-section p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tech Section */
+.tech-section {
+  margin-top: var(--spacing-2xl);
+  text-align: center;
+}
+
+.tech-section h3 {
+  color: var(--dashboard-accent);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-xl);
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.tech-tag {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: linear-gradient(
+    135deg,
+    rgba(44, 143, 255, 0.1),
+    rgba(15, 32, 62, 0.6)
+  );
+  border: 2px solid rgba(44, 143, 255, 0.3);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--dashboard-text);
+  font-weight: 600;
+  cursor: default;
+}
+
+/* Hover removido: .tech-tag não é um link */
+
+/* ============================================
+   RESPONSIVIDADE ADICIONAL (FERRAMENTAS)
+   ========================================================================== */
+@media (max-width: 1200px) {
+  .apps-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .sigma-navbar__toggle {
+    display: flex;
+  }
+
+  .sigma-navbar__menu {
+    position: fixed;
+    top: var(--navbar-height-mobile);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 1rem;
+    background: #f2f2f2;
+    border-top: 1px solid #e0e0e0;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 300ms ease;
+  }
+
+  .sigma-navbar__menu--open {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sigma-navbar__nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  .sigma-navbar__link {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .sigma-navbar__dropdown {
+    position: static;
+    min-width: 100%;
+    margin: 0;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+  }
+
+  .sigma-navbar__item--open .sigma-navbar__dropdown {
+    display: block;
+  }
+
+  .sigma-navbar__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--navbar-border);
+  }
+
+  .sigma-navbar__brand-subtitle {
+    display: none;
+  }
+
+  .has-sigma-navbar {
+    padding-top: var(--navbar-height-mobile);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-main.ferramentas-intro h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .card-main.ferramentas-intro .hero-subtitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .apps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+
+  .app-description {
+    min-height: 0;
+  }
+
+  .quick-access-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .quick-access-card {
+    padding: var(--spacing-md);
+  }
+
+  .quick-access-card .quick-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sigma-navbar__container {
+    padding: 0 1rem;
+  }
+
+  .card-main.ferramentas-intro {
+    padding: var(--spacing-xl);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .sigma-page-header {
+    padding: var(--spacing-lg);
+  }
+
+  .sigma-page-header__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sigma-page-header__stats {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .sigma-page-header__actions {
+    width: 100%;
+  }
+
+  .sigma-page-header__title h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .sigma-page-header__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sigma-page-header__icon i {
+    font-size: 20px;
+  }
+}
+
+/* ============================================
+   FOOTER GLOBAL
+   Estilos do footer para todas as páginas
+   ============================================ */
+.sigma-footer,
+.dashboard-footer {
+  background: linear-gradient(
+    to right,
+    #111111 0%,
+    var(--pli-navy) 50%,
+    var(--pli-green-dark) 100%
+  );
+  color: var(--pli-white);
+  padding: 0.75rem 0;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.sigma-footer__container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+}
+
+.sigma-footer__brand {
+  text-align: center;
+  margin-bottom: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.sigma-footer__logo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--pli-white);
+  margin-bottom: 0;
+}
+
+.sigma-footer__tagline {
+  color: var(--sigma-gray-400);
+  font-size: 0.75rem;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.sigma-footer__nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.sigma-footer__link {
+  color: var(--sigma-gray-400);
+  text-decoration: none;
+  font-size: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.sigma-footer__link:hover {
+  color: var(--pli-white);
+}
+
+.sigma-footer__copyright {
+  text-align: center;
+  color: var(--sigma-gray-500);
+  font-size: 0.7rem;
+  padding-top: 0.35rem;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Footer Content Grid (páginas com mais conteúdo no footer) */
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.footer-section h5 {
+  color: var(--sigma-gray-200);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+}
+
+.footer-section p,
+.footer-section li {
+  color: var(--sigma-gray-400);
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section a {
+  color: var(--sigma-gray-400);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+  color: var(--pli-white);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--sigma-gray-700);
+  padding-top: var(--spacing-lg);
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: var(--sigma-gray-500);
+  font-size: var(--font-size-sm);
+}
+
+/* Footer responsivo */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .sigma-footer__nav {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
+
+/* ============================================
+   ANIMAÇÕES GLOBAIS DE ENTRADA
+   Classes utilitárias para efeitos de "aparecer"
+   ============================================ */
+
+/* Keyframe principal de fade-in com movimento suave para cima */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Keyframe de fade-in apenas opacidade (sem movimento) */
+@keyframes fadeInSimple {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Keyframe de slide da esquerda */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Keyframe de slide da direita */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Keyframe de scale (zoom) */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Classes de animação básicas */
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.fade-in-simple {
+  animation: fadeInSimple 0.6s ease forwards;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.8s ease forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease forwards;
+}
+
+.scale-in {
+  animation: scaleIn 0.6s ease forwards;
+}
+
+/* Classes com delays progressivos */
+.fade-in-delay-1 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.2s forwards;
+}
+
+.fade-in-delay-2 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+}
+
+.fade-in-delay-3 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.6s forwards;
+}
+
+.fade-in-delay-4 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.8s forwards;
+}
+
+.fade-in-delay-5 {
+  opacity: 0;
+  animation: fadeIn 0.8s ease 1s forwards;
+}
+
+/* Estado inicial para elementos que serão animados via JS */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   TEMPLATE BASE DE APLICACAO
+   Padrão derivado de cadastro/instituição
+   ============================================ */
+
+body.dashboard-body.app-template-page,
+body.app-template-page {
+  --cf-bg: var(--pli-gray-bg, #f0f0f1);
+  --cf-surface: var(--pli-white, #ffffff);
+  --cf-border: var(--sigma-gray-200, #e2e8f0);
+  --cf-border-strong: var(--sigma-gray-300, #cbd5e0);
+  --cf-text: var(--pli-navy, #1c3d59);
+  --cf-text-muted: var(--pli-text-muted, #444444);
+  --cf-accent: var(--pli-navy, #1c3d59);
+  --cf-green: var(--pli-green, #3ec26e);
+  --cf-green-light: rgba(62, 194, 110, 0.08);
+  --cf-radius: var(--pli-radius-md, 8px);
+  --cf-radius-sm: var(--pli-radius-sm, 4px);
+  --cf-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  --cf-transition: var(--pli-transition-base, 0.3s ease);
+  background: var(--cf-bg) !important;
+  color: var(--cf-text);
+}
+
+.app-template-page .cf-main {
+  max-width: var(--sigma-page-max-width, 1560px);
+  margin: 0 auto;
+  padding: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.app-template-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-template-page .vw-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0 4px;
+}
+
+.app-template-page .vw-header__left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.app-template-page .vw-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--pli-fs-xs, 0.8125rem);
+  font-family: var(--pli-font-secondary, "Roboto", sans-serif);
+  color: var(--cf-text-muted);
+}
+
+.app-template-page .vw-breadcrumb a {
+  color: var(--cf-accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--cf-transition);
+}
+
+.app-template-page .vw-breadcrumb a:hover {
+  color: var(--cf-green);
+}
+
+.app-template-page .app-template-inline-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.app-template-page .app-template-inline-icon--crumb {
+  width: 0.7em;
+  height: 0.7em;
+  opacity: 0.4;
+}
+
+.app-template-page .vw-header__title {
+  text-align: left;
+  font-size: var(--pli-fs-h4, 1.45rem);
+  font-weight: 700;
+  font-family: var(--pli-font-primary, "Montserrat", sans-serif);
+  color: var(--cf-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.3;
+}
+
+.app-template-page .vw-header__title i {
+  color: var(--cf-green);
+  font-size: 0.85em;
+}
+
+.app-template-page .app-template-title-icon {
+  color: var(--pli-green, #3ec26e);
+}
+
+.app-template-page .vw-header__desc {
+  text-align: left;
+  margin: 0;
+  font-size: var(--pli-fs-sm, 0.875rem);
+  color: var(--cf-text-muted);
+}
+
+.app-template-page .cf-section {
+  background: var(--cf-surface);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius);
+  box-shadow: var(--cf-shadow);
+  overflow: hidden;
+}
+
+.app-template-page .cf-section__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--pli-font-primary, "Montserrat", sans-serif);
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    var(--pli-deep, #003b5a),
+    var(--pli-navy, #1c3d59)
+  );
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.app-template-page .cf-section__header .app-template-inline-icon--section {
+  color: var(--pli-green, #3ec26e);
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.app-template-page .cf-section__body {
+  padding: 20px;
+}
+
+.app-template-page .sigma-hidden {
+  display: none !important;
+}
+
+.app-template-page .form-label {
+  text-align: left;
+  font-size: var(--pli-fs-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--cf-text);
+  margin-bottom: 4px;
+}
+
+.app-template-page .form-control,
+.app-template-page .form-select {
+  font-size: var(--pli-fs-sm, 0.875rem);
+  font-family: var(--pli-font-secondary, "Roboto", sans-serif);
+  border: 1pt solid #6b7280;
+  border-radius: var(--cf-radius-sm);
+  padding: 8px 12px;
+  color: var(--cf-text);
+  background: var(--cf-surface);
+  box-shadow:
+    inset 1px 2px 4px rgba(0, 0, 0, 0.18),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition:
+    border-color var(--cf-transition),
+    box-shadow var(--cf-transition);
+}
+
+.app-template-page .form-control:focus,
+.app-template-page .form-select:focus {
+  border-color: var(--pli-blue, #116593);
+  box-shadow:
+    inset 1px 2px 4px rgba(0, 0, 0, 0.18),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1),
+    0 0 0 3px rgba(17, 101, 147, 0.15);
+  outline: none;
+}
+
+.app-template-page .form-control::placeholder {
+  color: var(--sigma-gray-400, #a0aec0);
+  font-weight: 400;
+}
+
+.app-template-page .invalid-feedback {
+  font-size: var(--pli-fs-xs, 0.8125rem);
+}
+
+.app-template-page .cf-required::after {
+  content: " *";
+  color: var(--pli-error, #c0392b);
+  font-weight: 700;
+}
+
+.app-template-page .form-check-label {
+  text-align: left;
+  font-size: var(--pli-fs-sm, 0.875rem);
+  color: var(--cf-text);
+}
+
+.app-template-page .alert-info {
+  background: rgba(17, 101, 147, 0.06);
+  border: 1px solid rgba(17, 101, 147, 0.15);
+  color: var(--cf-text);
+  border-radius: var(--cf-radius-sm);
+  font-size: var(--pli-fs-xs, 0.8125rem);
+}
+
+.app-template-page .cf-info-note {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(17, 101, 147, 0.06);
+  border: 1px solid rgba(17, 101, 147, 0.12);
+  border-radius: var(--cf-radius-sm);
+  font-size: var(--pli-fs-xs, 0.8125rem);
+  color: var(--cf-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.app-template-page .cf-info-note .app-template-inline-icon--info {
+  color: var(--pli-blue, #116593);
+  margin-top: 2px;
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+}
+
+.app-template-page .cf-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.app-template-page .cf-actions .btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: var(--pli-fs-sm, 0.875rem);
+  font-weight: 600;
+  font-family: var(--pli-font-primary, "Montserrat", sans-serif);
+  border-radius: var(--cf-radius);
+  transition: all var(--cf-transition);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.app-template-page .cf-actions .btn-primary {
+  background: var(--pli-gradient-btn);
+  color: var(--pli-white);
+  border: none;
+  box-shadow: var(--pli-shadow-btn);
+}
+
+.app-template-page .cf-actions .btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(17, 101, 147, 0.45);
+  transform: translateY(-1px);
+  color: var(--pli-white);
+}
+
+.app-template-page .cf-actions .btn-secondary {
+  background: var(--cf-surface);
+  color: var(--cf-text);
+  border: 1.5px solid var(--cf-border-strong);
+}
+
+.app-template-page .cf-actions .btn-secondary:hover {
+  background: var(--pli-gray-light, #f2f2f2);
+  border-color: var(--cf-accent);
+  color: var(--cf-text);
+}
+
+.app-template-page .app-template-summary-grid,
+.app-template-page .app-template-form-grid,
+.app-template-page .app-template-split-layout {
+  display: grid;
+  gap: 16px;
+}
+
+.app-template-page .app-template-summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.app-template-page .app-template-form-grid--two,
+.app-template-page .app-template-split-layout {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.app-template-page .app-template-field,
+.app-template-page .app-template-summary-card,
+.app-template-page .app-template-panel-card,
+.app-template-page .app-template-feedback {
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-sm);
+}
+
+.app-template-page .app-template-summary-card,
+.app-template-page .app-template-panel-card {
+  background: var(--cf-surface);
+  padding: 16px;
+}
+
+.app-template-page .app-template-summary-card {
+  --app-template-card-accent: rgba(17, 101, 147, 0.18);
+  --app-template-card-accent-strong: #116593;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  min-height: 100%;
+  padding: 22px 18px 20px;
+  text-align: center;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(247, 250, 252, 0.96) 100%
+    ),
+    var(--cf-surface);
+  box-shadow: 0 12px 26px rgba(28, 61, 89, 0.07);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.app-template-page .app-template-summary-card:nth-child(1) {
+  --app-template-card-accent: rgba(17, 101, 147, 0.18);
+  --app-template-card-accent-strong: #116593;
+}
+
+.app-template-page .app-template-summary-card:nth-child(2) {
+  --app-template-card-accent: rgba(28, 61, 89, 0.18);
+  --app-template-card-accent-strong: #1c3d59;
+}
+
+.app-template-page .app-template-summary-card:nth-child(3) {
+  --app-template-card-accent: rgba(22, 83, 156, 0.18);
+  --app-template-card-accent-strong: #16539c;
+}
+
+.app-template-page .app-template-summary-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--app-template-card-accent);
+  box-shadow: 0 16px 30px rgba(28, 61, 89, 0.14);
+}
+
+.app-template-page .app-template-summary-card__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 82px;
+  height: 82px;
+  margin: 4px auto 2px;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 255, 255, 0.82) 42%,
+      rgba(255, 255, 255, 0) 43%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(240, 246, 249, 0.98)
+    );
+  border: 1px solid var(--app-template-card-accent);
+  color: var(--app-template-card-accent-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 12px 22px rgba(28, 61, 89, 0.1);
+}
+
+.app-template-page .app-template-summary-card__icon::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92),
+    rgba(245, 249, 252, 0.9)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.95);
+}
+
+.app-template-page .app-template-summary-card__icon::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    var(--app-template-card-accent) 0%,
+    rgba(255, 255, 255, 0) 72%
+  );
+  opacity: 0.65;
+  z-index: 0;
+}
+
+.app-template-page
+  .app-template-summary-card__icon
+  .app-template-inline-icon--summary {
+  position: relative;
+  z-index: 1;
+  width: 2.15rem;
+  height: 2.15rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.35));
+}
+
+.app-template-page .app-template-summary-card__title,
+.app-template-page .app-template-panel-card__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: var(--cf-text);
+}
+
+.app-template-page .app-template-summary-card__title {
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 0 4px;
+  text-align: center;
+  line-height: 1.35;
+}
+
+.app-template-page .app-template-card-title-icon {
+  color: var(--pli-green, #3ec26e);
+  font-size: 0.92em;
+  flex-shrink: 0;
+}
+
+.app-template-page .app-template-summary-card__text,
+.app-template-page .app-template-checklist__item,
+.app-template-page .app-template-panel-card small,
+.app-template-page .app-template-feedback {
+  text-align: left;
+  font-size: var(--pli-fs-sm, 0.875rem);
+  color: var(--cf-text-muted);
+  margin: 0;
+}
+
+.app-template-page .app-template-summary-card__text {
+  text-align: center;
+  max-width: 24ch;
+  line-height: 1.6;
+}
+
+.app-template-page .app-template-field--full {
+  grid-column: 1 / -1;
+}
+
+.app-template-page .app-template-textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.app-template-page .app-template-checklist {
+  list-style: none;
+  text-align: left;
+  margin: 14px 0 0;
+}
+
+.app-template-page .app-template-checklist__item {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 12px;
+}
+
+.app-template-page .app-template-checklist__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 8px;
+  height: 8px;
+  background: var(--pli-green, #3ec26e);
+  transform: rotate(45deg);
+}
+
+.app-template-page .app-template-token-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.app-template-page .app-template-token {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(17, 101, 147, 0.08);
+  color: var(--pli-blue, #116593);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.app-template-page .app-template-alert-inline {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.app-template-page .app-template-alert-inline .app-template-inline-icon--alert {
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-top: 1px;
+  color: var(--pli-blue, #116593);
+}
+
+.app-template-page .cf-actions .btn .app-template-inline-icon--button {
+  width: 1rem;
+  height: 1rem;
+}
+
+.app-template-page .app-template-inline-icon--spinner {
+  width: 1rem;
+  height: 1rem;
+  animation: app-template-spin 0.8s linear infinite;
+}
+
+.app-template-page .app-template-feedback {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+}
+
+.app-template-page .app-template-feedback--success {
+  background: var(--cf-green-light);
+  border-color: rgba(62, 194, 110, 0.2);
+  color: var(--cf-text);
+}
+
+.app-template-page .app-template-feedback--error {
+  background: rgba(192, 57, 43, 0.08);
+  border-color: rgba(192, 57, 43, 0.18);
+  color: var(--cf-text);
+}
+
+@keyframes app-template-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .app-template-page .cf-main {
+    padding: 0 16px 20px;
+  }
+
+  .app-template-page .vw-header__title {
+    font-size: var(--pli-fs-h3, 1rem);
+  }
+
+  .app-template-page .cf-section__body {
+    padding: 16px;
+  }
+
+  .app-template-page .cf-actions,
+  .app-template-page .app-template-summary-grid,
+  .app-template-page .app-template-form-grid--two,
+  .app-template-page .app-template-split-layout {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .app-template-page .cf-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-template-page .cf-main {
+    padding: 0 12px 16px;
+  }
+
+  .app-template-page .cf-section__header {
+    font-size: var(--pli-fs-xs, 0.8125rem);
+    padding: 10px 14px;
+  }
+
+  .app-template-page .cf-section__body {
+    padding: 12px;
+  }
+}
+
+/* Animação de card-main entrando */
+.card-main {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Preferência do usuário: reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .fade-in-simple,
+  .fade-in-delay-1,
+  .fade-in-delay-2,
+  .fade-in-delay-3,
+  .fade-in-delay-4,
+  .fade-in-delay-5,
+  .slide-in-left,
+  .slide-in-right,
+  .scale-in,
+  .card-main {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .fade-in-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================
+   ACESSIBILIDADE
+   ============================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================
+   UTILITÁRIOS DE VISIBILIDADE
+   ============================================ */
+
+/* Oculta elemento inicialmente (substitui style="display: none;" inline) */
+.sigma-hidden {
+  display: none !important;
+}
+
+/* Destaque de cor primária para texto inline */
+.sigma-text-primary {
+  color: var(--sigma-accent);
+}
+
+/* Espaçamento superior para listas de tags */
+.sigma-mt-tags {
+  margin-top: 0.75rem;
+}
+
+/* ============================================
+   UTILITÁRIOS DE COR PLI
+   Classes helper para uso em templates e módulos
+   ============================================ */
+
+/* Textos */
+.pli-text-navy {
+  color: var(--pli-navy) !important;
+}
+.pli-text-deep {
+  color: var(--pli-deep) !important;
+}
+.pli-text-blue {
+  color: var(--pli-blue) !important;
+}
+.pli-text-green {
+  color: var(--pli-green) !important;
+}
+.pli-text-muted {
+  color: var(--pli-text-muted) !important;
+}
+.pli-text-white {
+  color: var(--pli-white) !important;
+}
+
+/* Fundos */
+.pli-bg-navy {
+  background-color: var(--pli-navy) !important;
+}
+.pli-bg-deep {
+  background-color: var(--pli-deep) !important;
+}
+.pli-bg-blue {
+  background-color: var(--pli-blue) !important;
+}
+.pli-bg-green {
+  background-color: var(--pli-green) !important;
+}
+.pli-bg-gray {
+  background-color: var(--pli-gray-bg) !important;
+}
+.pli-bg-white {
+  background-color: var(--pli-white) !important;
+}
+.pli-bg-hero {
+  background: var(--pli-gradient-hero) !important;
+}
+
+/* Bordas */
+.pli-border-navy {
+  border-color: var(--pli-navy) !important;
+}
+.pli-border-green {
+  border-color: var(--pli-green) !important;
+}
+.pli-border-blue {
+  border-color: var(--pli-blue) !important;
+}
+
+/* ============================================
+   UTILITÁRIOS TIPOGRÁFICOS PLI
+   ============================================ */
+.pli-font-primary {
+  font-family: var(--pli-font-primary) !important;
+}
+.pli-font-secondary {
+  font-family: var(--pli-font-secondary) !important;
+}
+
+.pli-fs-xs {
+  font-size: var(--pli-fs-xs) !important;
+}
+.pli-fs-sm {
+  font-size: var(--pli-fs-sm) !important;
+}
+.pli-fs-base {
+  font-size: var(--pli-fs-base) !important;
+}
+.pli-fs-md {
+  font-size: var(--pli-fs-md) !important;
+}
+.pli-fs-h3 {
+  font-size: var(--pli-fs-h3) !important;
+}
+.pli-fs-h4 {
+  font-size: var(--pli-fs-h4) !important;
+}
+.pli-fs-h2 {
+  font-size: var(--pli-fs-h2) !important;
+}
+.pli-fs-h1 {
+  font-size: var(--pli-fs-h1) !important;
+}
+
+.pli-fw-light {
+  font-weight: var(--pli-fw-light) !important;
+}
+.pli-fw-regular {
+  font-weight: var(--pli-fw-regular) !important;
+}
+.pli-fw-medium {
+  font-weight: var(--pli-fw-medium) !important;
+}
+.pli-fw-semibold {
+  font-weight: var(--pli-fw-semibold) !important;
+}
+.pli-fw-bold {
+  font-weight: var(--pli-fw-bold) !important;
+}
+.pli-fw-extrabold {
+  font-weight: var(--pli-fw-extrabold) !important;
+}
+
+/* ============================================
+   COMPONENTES BASE PLI
+   Look and feel PLI — use as classes .pli-* nos templates
+   ============================================ */
+
+/* ── Card PLI ──────────────────────────────── */
+.pli-card {
+  background-color: var(--pli-white);
+  border-radius: var(--pli-radius-md);
+  padding: var(--pli-space-xl) var(--pli-space-lg);
+  box-shadow: var(--pli-shadow-card);
+  border-top: 4px solid var(--pli-navy);
+  transition: var(--pli-transition-widget);
+  color: var(--pli-text);
+}
+
+.pli-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--pli-shadow-hover);
+  background-color: var(--pli-navy);
+  border-top-color: var(--pli-green);
+  color: var(--pli-white);
+}
+
+/* ── Botão primário PLI ────────────────────── */
+.pli-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.6rem 1.4rem;
+  font-family: var(--pli-font-primary);
+  font-size: var(--pli-fs-sm);
+  font-weight: var(--pli-fw-semibold);
+  border: none;
+  border-radius: var(--pli-radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--pli-transition-base);
+  letter-spacing: 0.03em;
+}
+
+.pli-btn--primary {
+  background-color: var(--pli-blue);
+  color: var(--pli-white);
+  box-shadow: var(--pli-shadow-btn);
+}
+
+.pli-btn--primary:hover {
+  background-color: var(--pli-navy);
+  box-shadow: var(--pli-shadow-hover);
+}
+
+.pli-btn--outline {
+  background-color: transparent;
+  color: var(--pli-blue);
+  border: 1.5px solid var(--pli-blue);
+}
+
+.pli-btn--outline:hover {
+  background-color: var(--pli-blue);
+  color: var(--pli-white);
+}
+
+.pli-btn--green {
+  background-color: var(--pli-green);
+  color: var(--pli-deep);
+  font-weight: var(--pli-fw-bold);
+}
+
+.pli-btn--green:hover {
+  background-color: var(--pli-green-dark);
+  color: var(--pli-white);
+}
+
+/* ── Badge PLI ─────────────────────────────── */
+.pli-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--pli-font-primary);
+  font-size: var(--pli-fs-xs);
+  font-weight: var(--pli-fw-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pli-badge--green {
+  background-color: var(--pli-green);
+  color: var(--pli-deep);
+}
+.pli-badge--blue {
+  background-color: var(--pli-blue);
+  color: var(--pli-white);
+}
+.pli-badge--navy {
+  background-color: var(--pli-navy);
+  color: var(--pli-white);
+}
+.pli-badge--outline {
+  background-color: transparent;
+  border: 1px solid var(--pli-green);
+  color: var(--pli-green);
+}
+
+/* ── Losango decorativo PLI ────────────────── */
+.pli-diamond::before {
+  content: "\25C6";
+  color: var(--pli-green);
+  margin-right: 0.4em;
+  font-size: 0.6em;
+  vertical-align: middle;
+  opacity: 0.8;
+}
+
+/* ── Divider pontilhado PLI ────────────────── */
+.pli-divider {
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--pli-green) 0,
+    var(--pli-green) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  opacity: 0.6;
+  border: none;
+  margin: var(--pli-space-md) 0;
+}
+
+/* ── Header de seção PLI ───────────────────── */
+.pli-section-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--pli-font-primary);
+  font-size: var(--pli-fs-h1);
+  font-weight: var(--pli-fw-semibold);
+  color: var(--pli-white);
+}
+
+.pli-section-header::before {
+  content: "\25C6";
+  font-size: 0.55em;
+  color: var(--pli-green);
+  flex-shrink: 0;
+}
+
+.pli-section-header::after {
+  content: "\00B7\00B7\00B7\00B7\00B7";
+  letter-spacing: 0.15em;
+  color: rgba(62, 194, 110, 0.6);
+  font-size: 0.55em;
+  font-weight: 300;
+}
+
+/* ── Footer PLI ────────────────────────────── */
+.pli-footer {
+  background-color: var(--pli-deep);
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  padding: var(--pli-space-lg) var(--pli-space-xl);
+  font-family: var(--pli-font-primary);
+  font-size: var(--pli-fs-xs);
+}
+
+.pli-footer a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  margin: 0 0.75rem;
+  transition: color var(--pli-transition-base);
+}
+
+.pli-footer a:hover {
+  color: var(--pli-green);
+}
+
+.pli-footer__copyright {
+  margin-top: var(--pli-space-sm);
+  font-size: var(--pli-fs-xs);
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: var(--pli-fw-medium);
+}
+
+/* ── UTILITÁRIOS DIMENSIONAMENTO ────────────────────────────────── */
+.spinner-xl {
+  width: 3rem !important;
+  height: 3rem !important;
+}
+
+/* ============================================================
+   VW-MAIN: Container principal de conteúdo — UMA ÚNICA FONTE
+   Usado por TODAS as páginas que extendem template_base_vw_pagina
+   ou qualquer template com <main class="vw-main ...">
+   Garante margens laterais e offset de navbar idênticos em todos
+   os módulos (M02, M03, M09 e futuros).
+   ============================================================ */
+
+.vw-main {
+  max-width: var(--sigma-page-max-width) !important;
+  margin: 0 auto;
+  padding: var(--sigma-page-header-clearance) 0
+    var(--sigma-page-footer-clearance);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: calc(100vh - 60px);
+  width: 100%;
+}
+
+@media (max-width: 968px) {
+  .vw-main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .vw-main {
+    padding-left: 0;
+    padding-right: 0;
+    gap: 8px;
+  }
+}
+
+@media print {
+  .vw-main {
+    padding-top: 0;
+  }
+}
+
+/* ============================================================
+   VW-INTRO-SECTION — Cabeçalho descritivo padrão de página
+   Usado por M02, M03, M09 e páginas que estendem
+   template_base_vw_pagina.html
+   ============================================================ */
+
+.vw-intro-section {
+  background: #ffffff;
+  border: 1px solid rgba(28, 61, 89, 0.14);
+  border-radius: var(--pli-radius-md, 8px);
+  padding: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.vw-intro-section__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: linear-gradient(
+    135deg,
+    var(--pli-deep, #003b5a) 0%,
+    var(--pli-navy, #1c3d59) 100%
+  );
+  padding: 14px 18px;
+}
+
+.vw-intro-section__head-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.vw-intro-section__icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--pli-green, #3ec26e);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+
+.vw-intro-section__titulo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: left;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.vw-intro-section__lead {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.65;
+  text-align: justify;
+  margin: 0;
+}
+
+#introBody {
+  padding: 16px 18px 12px;
+}
+
+.vw-intro-section__blocos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.vw-intro-bloco {
+  display: flex;
+  gap: 10px;
+  background: var(--pli-gray-light, #f2f2f2);
+  border: 1px solid rgba(28, 61, 89, 0.12);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.vw-intro-bloco__icone {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(
+    --pli-gradient-btn,
+    linear-gradient(135deg, #116593 0%, #1c3d59 100%)
+  );
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  margin-top: 1px;
+}
+
+.vw-intro-bloco__corpo,
+.vw-intro-bloco__texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.vw-intro-bloco__corpo strong,
+.vw-intro-bloco__texto strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pli-navy, #1c3d59);
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.vw-intro-bloco__corpo p,
+.vw-intro-bloco__texto p {
+  font-size: 0.8rem;
+  color: var(--pli-text-muted, #444444);
+  line-height: 1.5;
+  margin: 0;
+  text-align: left;
+}
+
+.vw-intro-section__rodape {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(28, 61, 89, 0.1);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.vw-intro-section__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--pli-blue, #116593);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(17, 101, 147, 0.25);
+  transition: all 0.2s;
+}
+
+.vw-intro-section__btn:hover {
+  background: rgba(17, 101, 147, 0.06);
+  border-color: var(--pli-blue, #116593);
+  color: var(--pli-navy, #1c3d59);
+}
+
+.vw-intro-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--pli-blue, #116593);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.vw-intro-link:hover {
+  color: var(--pli-navy, #1c3d59);
+  text-decoration: underline;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MAXIMUM OVERRIDE — COR DA FONTE DAS NAVBARS --pli-deep (#003b5a)
+   Especificidade máxima para sobrepor QUALQUER coisa
+   ════════════════════════════════════════════════════════════════ */
+html body header.sigma-header--public nav.sigma-navbar a.sigma-navbar__link,
+html body header.sigma-header--admin nav.sigma-navbar a.sigma-navbar__link,
+html body header.sigma-header--gestor nav.sigma-navbar a.sigma-navbar__link,
+html body header.sigma-header--restricted nav.sigma-navbar a.sigma-navbar__link,
+html
+  body
+  header.sigma-header--public
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-toggle,
+html
+  body
+  header.sigma-header--admin
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-toggle,
+html
+  body
+  header.sigma-header--gestor
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-toggle,
+html
+  body
+  header.sigma-header--restricted
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-toggle,
+html
+  body
+  header.sigma-header--public
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-link,
+html
+  body
+  header.sigma-header--admin
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-link,
+html
+  body
+  header.sigma-header--gestor
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-link,
+html
+  body
+  header.sigma-header--restricted
+  nav.sigma-navbar
+  a.sigma-navbar__dropdown-link {
+  color: var(--pli-deep, #003b5a) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SIGMA SESSION BAR - Barra de informações de sessão
+   ════════════════════════════════════════════════════════════════ */
+
+.sigma-session-bar--hidden {
+  display: none !important;
+}
+
+.sbar-renew-btn--hidden {
+  display: none !important;
+}
+
+.sigma-session-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  font-family: "Roboto", sans-serif;
+  color: #6c757d;
+  overflow-x: auto;
+  gap: 0.5rem;
+}
+
+.sigma-session-bar .sbar-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.sigma-session-bar .sbar-renew-btn {
+  position: absolute;
+  right: 0.5rem;
+}
+
+.sigma-session-bar .sbar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.0625rem;
+}
+
+.sigma-session-bar .sbar-item i {
+  font-size: 0.6rem;
+  color: var(--pli-green, #3ec26e);
+}
+
+.sigma-session-bar .sbar-name {
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.sigma-session-bar .sbar-username {
+  color: var(--pli-blue, #116593);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.sigma-session-bar .sbar-tipo {
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  color: var(--pli-blue, #116593);
+  text-transform: uppercase;
+  font-size: 0.625rem;
+}
+
+.sigma-session-bar .sbar-sep {
+  opacity: 0.4;
+  color: #999;
+  margin: 0 0.15rem;
+}
+
+/* Tempo de sessão em negrito */
+.sigma-session-bar #sbar-session-time {
+  font-weight: bold;
+}
+
+/* IDs de usuário e sessão em negrito */
+.sigma-session-bar #sbar-user-id,
+.sigma-session-bar #sbar-session-id {
+  font-weight: bold;
+}
+
+/* Botão Renovar Sessão */
+.sigma-session-bar .sbar-renew-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 0.6rem;
+  height: 18px;
+  font-size: 0.625rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--pli-blue, #116593);
+  background: rgba(17, 101, 147, 0.08);
+  border: 1px solid rgba(17, 101, 147, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+  letter-spacing: 0.02em;
+}
+
+.sigma-session-bar .sbar-renew-btn i {
+  font-size: 0.6rem;
+}
+
+.sigma-session-bar .sbar-renew-btn:hover {
+  background: rgba(17, 101, 147, 0.15);
+  border-color: rgba(17, 101, 147, 0.4);
+  color: var(--pli-deep, #003b5a);
+}
+
+.sigma-session-bar .sbar-renew-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

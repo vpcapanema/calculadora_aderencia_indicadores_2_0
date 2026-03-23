@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Etapa inicial da Calculadora de Aderência Metodológica 2.0.">
+  <title>Entrada de Indicadores | Calculadora de Aderência 2.0</title>
+  <link rel="stylesheet" href="./templates_modelo/style_global_reset_base.css">
+  <link rel="stylesheet" href="./templates_modelo/style_template_base_aplicacao.css">
+  <link rel="stylesheet" href="./styles/app.css">
+</head>
+<body class="app-template-page vw-page">
+  <div data-app-shell data-app-title="Calculadora de Aderência Metodológica" data-app-subtitle="Entrada estruturada de indicadores" data-app-section="Entrada"></div>
+  <main class="sigma-main">
+    <div class="cf-main app-shell">
+      <header class="vw-header">
+        <div class="vw-header__left">
+          <nav class="vw-breadcrumb" aria-label="Breadcrumb">
+            <a href="./home.html">Início</a>
+            <span>/</span>
+            <span>Entrada</span>
+          </nav>
+          <h1 class="vw-header__title">Calculadora de Aderência Metodológica 2.0</h1>
+          <p class="vw-header__desc">
+            Aplicação 2.0 reestruturada para cadastro, avaliação e consolidação de aderência metodológica de indicadores,
+            com fluxo autônomo, multipágina e persistência local.
+          </p>
+        </div>
+      </header>
+      <section class="cf-section">
+        <div class="cf-section__header"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-compass"></use></svg><span>Panorama da Solução</span></div>
+        <div class="cf-section__body">
+          <div class="app-template-summary-grid">
+            <article class="app-template-summary-card"><h2 class="app-template-summary-card__title"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-compass"></use></svg><span>Etapa 1</span></h2><p class="app-template-summary-card__text">Monte a ficha mínima de indicadores manualmente ou via CSV.</p></article>
+            <article class="app-template-summary-card"><h2 class="app-template-summary-card__title"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-sliders"></use></svg><span>Etapa 2</span></h2><p class="app-template-summary-card__text">Atribua notas com rubricas descritivas, pesos e critérios eliminatórios.</p></article>
+            <article class="app-template-summary-card"><h2 class="app-template-summary-card__title"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-paper-plane"></use></svg><span>Etapa 3</span></h2><p class="app-template-summary-card__text">Consolide resultados, sensibilidade, médias por critério e exportações.</p></article>
+          </div>
+        </div>
+      </section>
+      <section class="cf-section">
+        <div class="cf-section__header"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-landmark-outline"></use></svg><span>Identificação da Avaliação</span></div>
+        <div class="cf-section__body">
+          <div class="app-template-form-grid app-template-form-grid--two">
+            <div class="app-template-field"><label class="form-label" for="avaliadorInput">Nome do avaliador</label><input class="form-control" id="avaliadorInput" type="text" placeholder="Nome completo do avaliador"></div>
+            <div class="app-template-field"><label class="form-label" for="objetoEstudoInput">Objeto de estudo</label><input class="form-control" id="objetoEstudoInput" type="text" placeholder="Ex.: Dinâmica logística regional"></div>
+          </div>
+        </div>
+      </section>
+      <section class="cf-section">
+        <div class="cf-section__header"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-layers"></use></svg><span>Entrada de Indicadores</span></div>
+        <div class="cf-section__body">
+          <div class="app-entry-grid">
+            <article class="app-template-panel-card">
+              <h2 class="app-template-panel-card__title"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-layers"></use></svg><span>Importação por CSV</span></h2>
+              <p class="app-template-panel-card__text">Use o cabeçalho indicador, descricao, area, unidade_medida, fonte. O importador trata aspas, vírgulas em texto e comentários no topo do arquivo.</p>
+              <div class="app-inline-actions">
+                <button class="btn btn-primary" type="button" id="btnDownloadTemplate">Baixar template CSV</button>
+                <label class="btn btn-secondary app-file-label" for="csvFile">Selecionar arquivo CSV</label>
+                <input id="csvFile" type="file" accept=".csv" hidden>
+              </div>
+              <div class="app-upload-dropzone" id="uploadArea"><strong>Arraste o CSV aqui</strong><p>Ou clique para escolher o arquivo no seu computador</p></div>
+              <div id="uploadStatus" class="app-feedback app-feedback--success app-hidden" aria-live="polite"></div>
+            </article>
+            <article class="app-template-panel-card">
+              <h2 class="app-template-panel-card__title"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-info"></use></svg><span>Regras de preenchimento</span></h2>
+              <ul class="app-template-checklist">
+                <li class="app-template-checklist__item">Cada indicador precisa ao menos de nome e descrição.</li>
+                <li class="app-template-checklist__item">As informações de área, unidade e fonte enriquecem o relatório final.</li>
+                <li class="app-template-checklist__item">A etapa seguinte habilita justificativas obrigatórias nas notas críticas.</li>
+                <li class="app-template-checklist__item">Os dados ficam isolados nesta aplicação 2.0, sem depender da versão anterior.</li>
+              </ul>
+            </article>
+          </div>
+          <div class="app-table-toolbar">
+            <div class="app-table-toolbar__status" id="tableSummary">Nenhum indicador confirmado.</div>
+            <div class="app-inline-actions">
+              <button class="btn btn-secondary" type="button" id="btnAddRow">Adicionar linha</button>
+              <button class="btn btn-secondary" type="button" id="btnClearTable">Limpar tabela</button>
+            </div>
+          </div>
+          <div class="app-table-wrapper">
+            <table class="app-table" id="indicadoresTable">
+              <thead><tr><th>Indicador</th><th>Descrição</th><th>Área</th><th>Unidade de medida</th><th>Fonte</th><th>Ações</th></tr></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+          <div class="cf-actions">
+            <button class="btn btn-secondary" type="button" id="btnResetarSessao">Limpar sessão</button>
+            <button class="btn btn-primary" type="button" id="btnConfirm">Confirmar e ir para avaliação</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div data-app-footer></div>
+  <script src="./scripts/app-core.js"></script>
+  <script src="./scripts/app-shell.js"></script>
+  <script src="./scripts/home-page.js"></script>
+</body>
+</html>

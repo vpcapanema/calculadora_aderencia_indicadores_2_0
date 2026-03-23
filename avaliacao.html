@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Etapa de avaliação da Calculadora de Aderência Metodológica 2.0.">
+  <title>Avaliação por Critérios | Calculadora de Aderência 2.0</title>
+  <link rel="stylesheet" href="./templates_modelo/style_global_reset_base.css">
+  <link rel="stylesheet" href="./templates_modelo/style_template_base_aplicacao.css">
+  <link rel="stylesheet" href="./styles/app.css">
+</head>
+<body class="app-template-page vw-page">
+  <div data-app-shell data-app-title="Calculadora de Aderência Metodológica" data-app-subtitle="Avaliação orientada por rubricas" data-app-section="Avaliação"></div>
+  <main class="sigma-main">
+    <div class="cf-main app-shell">
+      <header class="vw-header">
+        <div class="vw-header__left">
+          <nav class="vw-breadcrumb" aria-label="Breadcrumb"><a href="./home.html">Entrada</a><span>/</span><span>Avaliação</span></nav>
+          <h1 class="vw-header__title">Atribuição de Níveis de Aderência</h1>
+          <p class="vw-header__desc">Avalie cada indicador nos sete critérios metodológicos. As notas são atribuídas em escala de 0 a 5, com pesos, limiares eliminatórios e justificativas textuais quando necessário.</p>
+        </div>
+      </header>
+      <section class="cf-section">
+        <div class="cf-section__header"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-sliders"></use></svg><span>Critérios de Avaliação</span></div>
+        <div class="cf-section__body">
+          <div class="app-criteria-overview" id="criteriaOverview"></div>
+          <div class="app-progress-card"><div class="app-progress-card__header"><strong>Progresso da avaliação</strong><span id="progressText">0 de 0 avaliações preenchidas</span></div><div class="app-progress-bar-track"><div class="app-progress-bar-fill" id="progressFill"></div></div></div>
+        </div>
+      </section>
+      <section class="cf-section">
+        <div class="cf-section__header"><svg class="app-title-icon" viewBox="0 0 20 20" aria-hidden="true"><use href="./templates_modelo/app_template_icon_sprite.svg#app-icon-layers"></use></svg><span>Indicadores em Avaliação</span></div>
+        <div class="cf-section__body">
+          <div id="indicadoresContainer" class="app-indicators-stack"></div>
+          <div class="cf-actions"><a class="btn btn-secondary" href="./home.html">Voltar para entrada</a><button class="btn btn-secondary" type="button" id="btnLimparAvaliacoes">Limpar avaliações</button><button class="btn btn-secondary" type="button" id="btnSalvar">Salvar progresso</button><button class="btn btn-primary" type="button" id="btnCalcular" disabled>Consolidar resultados</button></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div data-app-footer></div>
+  <script src="./scripts/app-core.js"></script>
+  <script src="./scripts/app-shell.js"></script>
+  <script src="./scripts/avaliacao-page.js"></script>
+</body>
+</html>

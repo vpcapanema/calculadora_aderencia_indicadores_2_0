@@ -1,0 +1,254 @@
+{% macro COMPONENTE_RODAPE_STORAGE_CATALOGO_CLONE() -%}
+<style>
+    .csrc-root {
+        --pli-navy: #1c3d59;
+        --pli-green-dark: #2aa358;
+        --pli-white: #ffffff;
+        --sigma-gray-400: #a0aec0;
+        --sigma-gray-500: #718096;
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .csrc-root * {
+        box-sizing: border-box;
+    }
+
+    .csrc-root .sigma-footer {
+        background: linear-gradient(to right, #111111 0%, var(--pli-navy) 50%, var(--pli-green-dark) 100%);
+        color: var(--pli-white);
+        padding: 0.75rem 0;
+        margin: 0;
+        flex-shrink: 0;
+        font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+    }
+
+    .csrc-root .sigma-footer__container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0.5rem 1rem;
+    }
+
+    .csrc-root .sigma-footer__brand {
+        text-align: center;
+        margin-bottom: 0.35rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.1rem;
+    }
+
+    .csrc-root .sigma-footer__logo {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--pli-white);
+        margin-bottom: 0;
+    }
+
+    .csrc-root .sigma-footer__tagline {
+        color: var(--sigma-gray-400);
+        font-size: 0.75rem;
+        margin: 0;
+        line-height: 1.3;
+    }
+
+    .csrc-root .sigma-footer__copyright {
+        text-align: center;
+        color: var(--sigma-gray-500);
+        font-size: 0.7rem;
+        padding-top: 0.35rem;
+        margin: 0;
+        line-height: 1.3;
+    }
+
+    .csrc-root section#govsp-rodape {
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        min-height: 200px;
+        width: 100%;
+        max-width: 100vw;
+        z-index: 9999999;
+        font-family: "Open Sans", Arial, sans-serif;
+    }
+
+    .csrc-root section#govsp-rodape .btn {
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 16px;
+        border-radius: 0.25rem;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+    .csrc-root section#govsp-rodape div {
+        padding: 0;
+        text-align: center;
+    }
+
+    .csrc-root section#govsp-rodape .container {
+        width: 100% !important;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .csrc-root section#govsp-rodape .container.rodape {
+        height: 120px;
+        width: 100%;
+        background: #000000 !important;
+        background-color: #000000 !important;
+        margin-top: 60px;
+        font-size: 16px;
+    }
+
+    .csrc-root section#govsp-rodape .linha-botoes {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 40px 0;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .csrc-root section#govsp-rodape .linha-botoes .coluna-4 {
+        width: 33.33333333%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .csrc-root section#govsp-rodape .linha-botoes .btn-model {
+        width: 202px;
+        min-height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Open Sans", Arial, sans-serif;
+        color: #ffffff !important;
+        padding: 4px 35px;
+        border-radius: 20px;
+        border: 0;
+        background: #243e63;
+        transition: background ease .2s;
+        text-decoration: none;
+        font-size: 16px !important;
+    }
+
+    .csrc-root section#govsp-rodape .linha-botoes .btn-model:hover {
+        color: #ffffff;
+        background: #000000;
+    }
+
+    .csrc-root section#govsp-rodape .logo-rodape {
+        max-width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+    }
+
+    .csrc-root section#govsp-rodape a:focus,
+    .csrc-root section#govsp-rodape a:hover {
+        border: 1px dotted #cccccc52;
+    }
+
+    @media screen and (max-width: 780px) {
+        .csrc-root section#govsp-rodape {
+            margin-top: 45px;
+        }
+
+        .csrc-root section#govsp-rodape .linha-botoes {
+            flex-direction: column;
+            padding: 0;
+            margin-top: 12px;
+        }
+
+        .csrc-root section#govsp-rodape .linha-botoes .coluna-4 {
+            min-width: 100%;
+            width: 100%;
+            padding-top: 15px;
+        }
+
+        .csrc-root section#govsp-rodape .linha-botoes .btn-model {
+            width: 95%;
+        }
+    }
+</style>
+
+<div class="csrc-root">
+    <footer class="sigma-footer">
+        <div class="sigma-footer__container">
+            <div class="sigma-footer__brand">
+                <span class="sigma-footer__logo">🔷 SIGMA-PLI</span>
+                <span class="sigma-footer__tagline">Sistema Integrado de Gestao, Monitoramento e Apoio tecnico ao
+                    PLI/SP</span>
+            </div>
+            <p class="sigma-footer__copyright">
+                &copy; <span data-csrc-year>2026</span> <strong>Desenvolvido por VPC-GEOSER-Geoprocessamento
+                    Inteligente</strong> • Desenvolvido para o PLI/SP 2050
+            </p>
+        </div>
+    </footer>
+
+    <section id="govsp-rodape">
+        <div class="container">
+            <div class="linha-botoes">
+                <div class="coluna-4">
+                    <a href="https://www.ouvidoria.sp.gov.br/Portal/Default.aspx" class="btn btn-model">Ouvidoria</a>
+                </div>
+                <div class="coluna-4">
+                    <a href="http://www.transparencia.sp.gov.br/" class="btn btn-model">Transparência</a>
+                </div>
+                <div class="coluna-4">
+                    <a href="http://www.sic.sp.gov.br/" class="btn btn-model">SIC</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container rodape">
+            <div class="logo-rodape">
+                <a href="https://www.saopaulo.sp.gov.br/">
+                    <img src="/static/govsp/img/logo-rodape-governo-do-estado-sp.png"
+                        alt="site do Governo de São Paulo">
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+        if (window.__TEMPLATES_MODELO_RODAPE_STORAGE_CATALOGO_CLONE__) return;
+        window.__TEMPLATES_MODELO_RODAPE_STORAGE_CATALOGO_CLONE__ = true;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentYear = String(new Date().getFullYear());
+            document.querySelectorAll('[data-csrc-year]').forEach(function (node) {
+                node.textContent = currentYear;
+            });
+        });
+    }());
+</script>
+{%- endmacro %}
