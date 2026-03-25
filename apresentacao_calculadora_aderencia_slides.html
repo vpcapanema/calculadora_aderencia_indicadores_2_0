@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Aderência 2.0 — Apresentação | SIGMA-PLI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ────────────────────────────────────────────── */
+    :root {
+      --deep:  #003b5a;
+      --navy:  #1c3d59;
+      --blue:  #116593;
+      --green: #3ec26e;
+      --gd:    #2aa358;
+      --black: #212529;
+      --gray1: #f5f7fa;
+      --gray2: #e9ecef;
+      --gray3: #dee2e6;
+      --gray4: #adb5bd;
+      --white: #ffffff;
+      --fh:    'Montserrat', sans-serif;
+      --fb:    'Roboto', sans-serif;
+    }
+
+    /* ─── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; }
+    body {
+      font-family: var(--fb);
+      color: var(--black);
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* ─── DECK ──────────────────────────────────────────────── */
+    .deck {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+    .deck::-webkit-scrollbar { display: none; }
+
+    /* ─── SLIDE BASE ────────────────────────────────────────── */
+    .slide {
+      height: 100vh;
+      width: 100vw;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .slide--white { background: var(--white); }
+    .slide--gray  { background: var(--gray1); }
+
+    /* ─── PROGRESS BAR ──────────────────────────────────────── */
+    #pb {
+      position: fixed; left: 0; top: 0;
+      width: 6px; height: 0%;
+      background: var(--green);
+      z-index: 200;
+      transition: height .3s;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* ─── NAV DOTS ──────────────────────────────────────────── */
+    #nav {
+      position: fixed; right: 18px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 9px;
+      z-index: 200;
+    }
+    .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: rgba(0,0,0,0.2);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all .22s;
+    }
+    .dot.active {
+      background: var(--deep);
+      border-color: var(--deep);
+      transform: scale(1.35);
+    }
+
+    /* ─── COUNTER ───────────────────────────────────────────── */
+    #ctr {
+      position: fixed; bottom: 18px; right: 44px;
+      font-family: var(--fh);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 1.5px; color: var(--gray4);
+      z-index: 200;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SLIDE 01 — CAPA
+    ═══════════════════════════════════════════════════════════ */
+    #s01 {
+      background: linear-gradient(145deg, #001e2f 0%, #003b5a 50%, #0a5378 100%);
+      justify-content: center;
+      padding: 0 10vw;
+    }
+    #s01 .tag {
+      display: inline-block;
+      background: rgba(62,194,110,.15);
+      border: 1.5px solid var(--green);
+      color: var(--green);
+      font-family: var(--fh);
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 6px 18px; border-radius: 4px;
+      margin-bottom: 1.8rem;
+    }
+    #s01 .divider {
+      width: 70px; height: 4px;
+      background: var(--green); border-radius: 2px;
+      margin-bottom: 1.8rem;
+    }
+    #s01 h1 {
+      font-family: var(--fh);
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      font-weight: 900; color: #fff;
+      line-height: 1.06; letter-spacing: -1.5px;
+      margin-bottom: .4rem;
+    }
+    #s01 h1 span { color: var(--green); }
+    #s01 .sub {
+      font-family: var(--fb); font-size: clamp(1rem, 1.6vw, 1.3rem);
+      font-weight: 300; color: rgba(255,255,255,.6);
+      max-width: 780px; line-height: 1.55;
+      margin-bottom: 2.5rem;
+    }
+    #s01 .meta {
+      display: flex; gap: 3rem; align-items: center;
+    }
+    #s01 .mi { display: flex; flex-direction: column; gap: 2px; }
+    #s01 .mi .lbl {
+      font-family: var(--fh); font-size: .65rem;
+      font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--green);
+    }
+    #s01 .mi .val {
+      font-family: var(--fh); font-size: .96rem;
+      font-weight: 600; color: rgba(255,255,255,.9);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER COMUM (s02–s09)
+    ═══════════════════════════════════════════════════════════ */
+    .sh {
+      display: flex; align-items: center; gap: 1.4rem;
+      padding: 1.8rem 8vw 1.4rem;
+      border-bottom: 3px solid var(--gray2);
+      background: inherit;
+      flex-shrink: 0;
+    }
+    .sh.accent { border-bottom-color: var(--green); }
+    .badge {
+      font-family: var(--fh);
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      font-weight: 900; color: var(--gray2);
+      line-height: 1; min-width: 70px; text-align: right;
+      letter-spacing: -2px;
+    }
+    .badge.c { color: var(--green); }
+    .ht .slbl {
+      font-family: var(--fh); font-size: .7rem;
+      font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 2px;
+    }
+    .ht h2 {
+      font-family: var(--fh);
+      font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+      font-weight: 800; color: var(--deep);
+      line-height: 1.12;
+    }
+    .ht h2 em { font-style: normal; color: var(--blue); }
+
+    /* ─── BODY COMUM ────────────────────────────────────────── */
+    .sb {
+      flex: 1;
+      padding: 1.8rem 8vw 1.4rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    /* ─── PARÁGRAFO LEAD ────────────────────────────────────── */
+    .lead {
+      font-size: clamp(1rem, 1.45vw, 1.2rem);
+      line-height: 1.7; color: var(--black);
+    }
+    .lead strong { color: var(--deep); }
+
+    /* ─── BOX DESTAQUE ──────────────────────────────────────── */
+    .box {
+      background: #edf5fb;
+      border-left: 5px solid var(--blue);
+      border-radius: 0 10px 10px 0;
+      padding: 1.1rem 1.4rem;
+    }
+    .box.green-box {
+      background: #edf9f1;
+      border-left-color: var(--gd);
+    }
+    .box.warn-box {
+      background: #fff8ec;
+      border-left-color: #f39c12;
+    }
+    .box .blbl {
+      font-family: var(--fh); font-size: .7rem;
+      font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: .5rem;
+    }
+    .box.green-box .blbl { color: var(--gd); }
+    .box.warn-box .blbl  { color: #b07d00; }
+    .box p {
+      font-size: clamp(.95rem, 1.3vw, 1.1rem);
+      line-height: 1.65; color: var(--navy);
+    }
+
+    /* ─── TWO-COL LAYOUT ────────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .two-col-wide {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.2rem;
+    }
+
+    /* ─── CARDS ROW ─────────────────────────────────────────── */
+    .cards {
+      display: flex; flex-wrap: nowrap; gap: .9rem;
+    }
+    .card {
+      flex: 1;
+      background: var(--white);
+      border: 1.5px solid var(--gray3);
+      border-top: 4px solid var(--blue);
+      border-radius: 10px;
+      padding: 1rem 1rem .9rem;
+      display: flex; flex-direction: column; gap: .35rem;
+    }
+    .card.c-green { border-top-color: var(--gd); }
+    .card.c-deep  { border-top-color: var(--deep); }
+    .card.c-warn  { border-top-color: #f39c12; }
+    .card .icon { font-size: 1.35rem; }
+    .card .cname {
+      font-family: var(--fh); font-size: .78rem;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: .5px; color: var(--deep);
+    }
+    .card .cdesc {
+      font-size: clamp(.85rem, 1.1vw, .95rem);
+      color: var(--black); line-height: 1.42;
+    }
+    .card .cpeso {
+      margin-top: auto;
+      display: inline-block;
+      font-family: var(--fh); font-weight: 800;
+      font-size: .78rem; color: var(--white);
+      background: var(--deep); border-radius: 20px;
+      padding: 2px 10px;
+    }
+    .card.c-green .cpeso { background: var(--gd); }
+    .card.c-blue  .cpeso { background: var(--blue); }
+    .card.c-warn  .cpeso { background: #c87f00; }
+
+    /* ─── CHECKLIST ─────────────────────────────────────────── */
+    .chk { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+    .chk li {
+      display: flex; align-items: flex-start; gap: .85rem;
+      background: var(--white); border-radius: 9px;
+      padding: .8rem 1.05rem; border: 1.5px solid var(--gray3);
+    }
+    .slide--gray .chk li { background: var(--white); }
+    .chk .cn {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--deep); color: #fff;
+      font-family: var(--fh); font-weight: 800;
+      font-size: .82rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .chk .cn.g { background: var(--gd); }
+    .chk .cn.b { background: var(--blue); }
+    .chk .cc strong {
+      font-family: var(--fh); font-size: .95rem;
+      font-weight: 700; color: var(--deep);
+      display: block; margin-bottom: 2px;
+    }
+    .chk .cc span {
+      font-size: clamp(.88rem, 1.18vw, 1rem);
+      color: var(--black); line-height: 1.45;
+    }
+
+    /* ─── STEPS LIST ────────────────────────────────────────── */
+    .steps {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .step {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .step-conn {
+      display: flex; flex-direction: column; align-items: center;
+      flex-shrink: 0; width: 38px;
+    }
+    .step-circle {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--deep); color: #fff;
+      font-family: var(--fh); font-weight: 700; font-size: .9rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; z-index: 1;
+    }
+    .step-line {
+      width: 2px; flex: 1; min-height: 10px;
+      background: var(--gray3); margin: 0 auto;
+    }
+    .step-txt { padding-bottom: .9rem; }
+    .step-txt strong {
+      font-family: var(--fh); font-size: .97rem;
+      font-weight: 700; color: var(--deep);
+      display: block; margin-bottom: 2px;
+    }
+    .step-txt span {
+      font-size: clamp(.88rem, 1.18vw, 1rem);
+      color: var(--black); line-height: 1.45;
+    }
+
+    /* ─── FORMULA CARD ──────────────────────────────────────── */
+    .fcard {
+      background: var(--deep); border-radius: 12px;
+      padding: 1.2rem 1.4rem; color: #fff;
+    }
+    .fcard .ftitle {
+      font-family: var(--fh); font-size: .7rem;
+      font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,.55);
+      margin-bottom: .85rem;
+    }
+    .fsteps {
+      display: flex; align-items: center; gap: .7rem;
+      flex-wrap: wrap; margin-bottom: .75rem;
+    }
+    .fstep {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-family: 'Courier New', monospace;
+      font-size: clamp(.82rem, 1.05vw, .9rem);
+      color: rgba(255,255,255,.9); white-space: nowrap;
+    }
+    .farrow { color: var(--green); font-size: 1.1rem; font-weight: 700; }
+    .fresult {
+      display: block;
+      background: var(--green); color: #003b5a;
+      font-family: var(--fh); font-weight: 800;
+      font-size: .88rem; padding: 8px 14px;
+      border-radius: 6px; text-align: center;
+    }
+
+    /* ─── TAGS ──────────────────────────────────────────────── */
+    .tags { display: flex; gap: .55rem; flex-wrap: wrap; margin-top: .75rem; }
+    .tg {
+      display: inline-block; background: var(--deep);
+      color: #fff; font-family: var(--fh);
+      font-size: .7rem; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .tg.g { background: var(--gd); }
+    .tg.b { background: var(--blue); }
+    .tg.w { background: #b07d00; }
+
+    /* ─── CLASSIFICAÇÃO BADGES ──────────────────────────────── */
+    .cls-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .9rem;
+    }
+    .cls-card {
+      border-radius: 12px;
+      padding: 1rem 1rem .9rem;
+      border: 1.5px solid transparent;
+    }
+    .cls-card .cls-range {
+      font-family: var(--fh); font-weight: 800;
+      font-size: 1.5rem; line-height: 1;
+      margin-bottom: .3rem;
+    }
+    .cls-card .cls-label {
+      font-family: var(--fh); font-weight: 700;
+      font-size: .82rem; text-transform: uppercase;
+      letter-spacing: .5px; margin-bottom: .45rem;
+    }
+    .cls-card .cls-desc {
+      font-size: clamp(.82rem, 1.05vw, .9rem);
+      line-height: 1.45;
+    }
+    .cls-a { background: #d8f5e5; border-color: #2aa358; color: #0f4027; }
+    .cls-b { background: #e8f4fc; border-color: #116593; color: #0a3352; }
+    .cls-c { background: #fff4d1; border-color: #d4a017; color: #5a3e00; }
+    .cls-d { background: #fde8e8; border-color: #c0392b; color: #5a1010; }
+
+    /* ─── TABELA DE CRITÉRIOS ───────────────────────────────── */
+    .t-crit { width: 100%; border-collapse: collapse; }
+    .t-crit thead tr { background: var(--deep); }
+    .t-crit thead th {
+      font-family: var(--fh); font-weight: 700;
+      font-size: .8rem; letter-spacing: .8px;
+      text-transform: uppercase; color: #fff;
+      padding: 9px 12px; text-align: left;
+    }
+    .t-crit tbody tr:nth-child(even) { background: var(--gray1); }
+    .t-crit tbody tr:hover { background: #e8f4fd; }
+    .t-crit tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--gray3);
+      font-size: clamp(.85rem, 1.1vw, .97rem);
+      line-height: 1.42; color: var(--black);
+    }
+    .t-crit tbody td:first-child {
+      font-family: var(--fh); font-weight: 700;
+      color: var(--deep);
+    }
+    .peso-bar {
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .bar-bg {
+      flex: 1; height: 8px; background: var(--gray2);
+      border-radius: 5px; overflow: hidden; max-width: 100px;
+    }
+    .bar-fill {
+      height: 100%; background: var(--green); border-radius: 5px;
+    }
+    .peso-val {
+      font-family: var(--fh); font-weight: 700;
+      font-size: .82rem; color: var(--deep);
+      min-width: 32px;
+    }
+    .elim-badge {
+      display: inline-block; font-family: var(--fh);
+      font-size: .68rem; font-weight: 700;
+      padding: 2px 9px; border-radius: 10px;
+      background: #fde8e8; color: #a01c1c;
+    }
+
+    /* ─── EXEMPLO TABLE ─────────────────────────────────────── */
+    .t-rank { width: 100%; border-collapse: collapse; }
+    .t-rank thead tr { background: var(--deep); }
+    .t-rank thead th {
+      font-family: var(--fh); font-weight: 700;
+      font-size: .78rem; letter-spacing: .8px;
+      text-transform: uppercase; color: #fff;
+      padding: 9px 12px; text-align: left;
+    }
+    .t-rank tbody tr:nth-child(even) { background: #f0f7ff; }
+    .t-rank tbody tr:hover { background: #dbeeff; }
+    .t-rank tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--gray3);
+      font-size: clamp(.85rem, 1.1vw, .95rem);
+      line-height: 1.4; color: var(--black);
+    }
+    .t-rank tbody td:first-child {
+      font-family: var(--fh); font-weight: 800;
+      font-size: 1rem; color: var(--deep);
+      text-align: center; width: 40px;
+    }
+    .score-bar {
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .score-val {
+      font-family: var(--fh); font-weight: 700;
+      font-size: .85rem; color: var(--deep);
+      min-width: 34px; text-align: right;
+    }
+    .cls-badge {
+      display: inline-block; font-family: var(--fh);
+      font-size: .7rem; font-weight: 700; letter-spacing: .4px;
+      padding: 3px 10px; border-radius: 10px;
+    }
+    .cb-a { background: #d8f5e5; color: #1a7a42; }
+    .cb-b { background: #e8f4fc; color: #0a3352; }
+    .cb-c { background: #fff4d1; color: #7a5a00; }
+    .cb-d { background: #fde8e8; color: #a01c1c; }
+
+    /* ─── CTA ───────────────────────────────────────────────── */
+    .cta-box {
+      background: var(--gray1); border: 2px solid var(--green);
+      border-radius: 12px; padding: 1.2rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem;
+    }
+    .cta-box .ct {
+      font-family: var(--fh); font-size: .7rem;
+      font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: .3rem;
+    }
+    .cta-box p { font-size: .97rem; color: var(--black); line-height: 1.5; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--deep); color: #fff;
+      font-family: var(--fh); font-size: .88rem;
+      font-weight: 700; letter-spacing: .5px;
+      padding: 10px 22px; border-radius: 7px;
+      text-decoration: none; white-space: nowrap;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .btn, .btn:visited, .btn:hover, .btn:focus, .btn:active { color: #ffffff !important; }
+    .btn:hover { background: var(--blue); }
+
+    /* ─── NOTA SCALE ────────────────────────────────────────── */
+    .nota-scale {
+      display: flex; gap: .5rem; align-items: stretch;
+    }
+    .nota-item {
+      flex: 1;
+      border-radius: 10px;
+      padding: .7rem .65rem;
+      display: flex; flex-direction: column; align-items: center; gap: .3rem;
+      border: 1.5px solid var(--gray3);
+      background: var(--white);
+    }
+    .nota-item .nval {
+      font-family: var(--fh); font-weight: 900;
+      font-size: 1.4rem; line-height: 1;
+    }
+    .nota-item .nrub {
+      font-size: clamp(.72rem, .9vw, .8rem);
+      text-align: center; color: var(--black); line-height: 1.3;
+    }
+    .n0 { background: #fde8e8; border-color: #e08080; }  .n0 .nval { color: #a01c1c; }
+    .n1 { background: #fff0e1; border-color: #e8a074; }  .n1 .nval { color: #8b4000; }
+    .n2 { background: #fff8ec; border-color: #d4b55a; }  .n2 .nval { color: #5a3e00; }
+    .n3 { background: #f0fbf5; border-color: #7dc4a0; }  .n3 .nval { color: #1a4d34; }
+    .n4 { background: #e2f5ea; border-color: #5cb07a; }  .n4 .nval { color: #0f4027; }
+    .n5 { background: #d2f0e0; border-color: #2aa358; }  .n5 .nval { color: #073b1a; }
+
+    /* ─── UTILITÁRIOS DE LAYOUT ───────────────────────────── */
+    .u-row-12 { display: flex; gap: 1.2rem; }
+    .u-row-09-mt04 { display: flex; gap: .9rem; margin-top: .4rem; }
+    .u-flex-1 { flex: 1; }
+    .u-flex-15 { flex: 1.5; }
+    .u-chk-row { flex-direction: row; flex-wrap: nowrap; }
+    .u-box-deep { background: #eef3fa; border-left-color: var(--deep); }
+    .u-blbl-deep { color: var(--deep); }
+    .u-mt-075 { margin-top: .75rem; }
+    .u-mt-06 { margin-top: .6rem; }
+
+    /* ─── UTILITÁRIOS DE FÓRMULA ──────────────────────────── */
+    .u-formula-grid-7,
+    .u-formula-grid-6 {
+      display: grid;
+      color: rgba(255,255,255,.88);
+    }
+    .u-formula-grid-7 {
+      grid-template-columns: 1.8fr repeat(7, 1fr);
+      gap: .22rem .5rem;
+      font-size: .78rem;
+      margin: .45rem 0 .6rem;
+    }
+    .u-formula-grid-6 {
+      grid-template-columns: 1.7fr repeat(6, 1fr);
+      gap: .22rem .4rem;
+      font-size: .74rem;
+      margin: .4rem 0 .55rem;
+    }
+    .u-formula-hint,
+    .u-formula-hint-center {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .u-formula-hint {
+      font-size: .64rem;
+      color: rgba(255,255,255,.4);
+    }
+    .u-formula-hint-center {
+      text-align: center;
+      font-size: .64rem;
+      color: rgba(255,255,255,.4);
+    }
+    .u-formula-hint-small {
+      font-size: .62rem;
+      color: rgba(255,255,255,.4);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .u-formula-hint-small-center {
+      text-align: center;
+      font-size: .62rem;
+      color: rgba(255,255,255,.4);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .u-formula-subhint {
+      color: rgba(255,255,255,.5);
+      font-size: .7rem;
+    }
+    .u-center { text-align: center; }
+    .u-positive {
+      text-align: center;
+      color: var(--green);
+      font-weight: 700;
+    }
+    .u-negative {
+      text-align: center;
+      color: #f97;
+    }
+
+    /* ─── UTILITÁRIOS DE TABELA ───────────────────────────── */
+    .w-100 { width: 100%; }
+    .w-84 { width: 84%; }
+    .w-72 { width: 72%; }
+    .w-67 { width: 67%; }
+    .w-64 { width: 64%; }
+    .w-50 { width: 50%; }
+    .w-48 { width: 48%; }
+    .w-42 { width: 42%; }
+    .w-33 { width: 33%; }
+    .w-18 { width: 18%; }
+    .w-17 { width: 17%; }
+    .ia-gd {
+      font-family: var(--fh);
+      font-weight: 800;
+      color: var(--gd);
+    }
+    .ia-blue {
+      font-family: var(--fh);
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .ia-warn {
+      font-family: var(--fh);
+      font-weight: 800;
+      color: #b07d00;
+    }
+    .ia-bad {
+      font-family: var(--fh);
+      font-weight: 800;
+      color: #a01c1c;
+    }
+    .status-good {
+      font-size: .82rem;
+      color: #1a7a42;
+    }
+    .status-warn {
+      font-size: .82rem;
+      color: #b07d00;
+    }
+    .status-bad {
+      font-size: .82rem;
+      color: #a01c1c;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="pb"></div>
+
+  <nav id="nav">
+    <div class="dot" data-i="0" title="Capa"></div>
+    <div class="dot" data-i="1" title="Contextualização"></div>
+    <div class="dot" data-i="2" title="O que é a ferramenta"></div>
+    <div class="dot" data-i="3" title="Conceito de Aderência"></div>
+    <div class="dot" data-i="4" title="Os 7 Critérios"></div>
+    <div class="dot" data-i="5" title="Sistema de Notas"></div>
+    <div class="dot" data-i="6" title="Fluxo da Ferramenta"></div>
+    <div class="dot" data-i="7" title="Classificação e Sensibilidade"></div>
+    <div class="dot" data-i="8" title="Exemplo PLI"></div>
+    <div class="dot" data-i="9" title="Referências"></div>
+  </nav>
+
+  <div id="ctr">1 / 10</div>
+
+  <main class="deck" id="deck">
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 01 — CAPA
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide" id="s01">
+      <div class="tag">SIGMA-PLI · SP 2050</div>
+      <div class="divider"></div>
+      <h1>Calculadora de<br>Aderência <span>Metodológica</span></h1>
+      <p class="sub">Ferramenta estruturada para avaliação, classificação e consolidação da aderência metodológica de indicadores — aplicada ao planejamento logístico integrado do Estado de São Paulo</p>
+      <div class="meta">
+        <div class="mi">
+          <span class="lbl">Programa</span>
+          <span class="val">PLI-SP 2050</span>
+        </div>
+        <div class="mi">
+          <span class="lbl">Versão</span>
+          <span class="val">2.0</span>
+        </div>
+        <div class="mi">
+          <span class="lbl">Ferramenta</span>
+          <span class="val">SIGMA-PLI</span>
+        </div>
+        <div class="mi">
+          <span class="lbl">Critérios</span>
+          <span class="val">7 dimensões</span>
+        </div>
+        <div class="mi">
+          <span class="lbl">Etapas</span>
+          <span class="val">3 módulos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 02 — CONTEXTUALIZAÇÃO
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--white" id="s02">
+      <header class="sh accent">
+        <div class="badge c">CTX</div>
+        <div class="ht">
+          <div class="slbl">Introdução e contextualização</div>
+          <h2>O problema da <em>seleção de indicadores</em> em estudos territoriais</h2>
+        </div>
+      </header>
+      <div class="sb">
+        <p class="lead">
+          Estudos de planejamento territorial — como o <strong>PLI-SP 2050</strong> — exigem a seleção de
+          indicadores que representem fielmente os fenômenos analisados. A escolha inadequada compromete
+          o diagnóstico, a priorização de investimentos e a legitimidade técnica dos resultados.
+        </p>
+        <div class="u-row-12">
+          <div class="box u-flex-1">
+            <div class="blbl">O desafio central</div>
+            <p>Nem todo dado disponível é um bom indicador. Um indicador só é metodologicamente sólido quando há
+            <strong>relação causal verificável</strong> entre ele e o fenômeno que pretende medir — e quando
+            essa relação é <strong>específica, sensível e mensurável</strong> com os recursos disponíveis.</p>
+          </div>
+          <div class="box green-box u-flex-1">
+            <div class="blbl">Contexto PLI-SP</div>
+            <p>O PLI-SP 2050 opera com dezenas de indicadores distribuídos em múltiplas dimensões — mobilidade,
+            logística, desenvolvimento regional, infraestrutura. A validação sistemática desses indicadores é
+            condição para que o plano seja auditável e replicável.</p>
+          </div>
+        </div>
+        <ul class="chk u-chk-row">
+          <li class="u-flex-1">
+            <div class="cn b">?</div>
+            <div class="cc">
+              <strong>O indicador mede o que se propõe a medir?</strong>
+              <span>Proximidade conceitual entre o dado e o fenômeno é o critério mais crítico de validade.</span>
+            </div>
+          </li>
+          <li class="u-flex-1">
+            <div class="cn">!</div>
+            <div class="cc">
+              <strong>Há evidência causal ou apenas correlação?</strong>
+              <span>A confusão entre correlação e causalidade é a principal fonte de erro em análises territoriais.</span>
+            </div>
+          </li>
+          <li class="u-flex-1">
+            <div class="cn g">✓</div>
+            <div class="cc">
+              <strong>O dado é realmente coletável e replicável?</strong>
+              <span>Indicadores inacessíveis ou de baixa precisão no nível municipal inviabilizam análises regionais robustas.</span>
+            </div>
+          </li>
+        </ul>
+        <div class="tags">
+          <span class="tg">PLI-SP 2050</span>
+          <span class="tg b">Diagnóstico territorial</span>
+          <span class="tg g">Validade metodológica</span>
+          <span class="tg w">Auditabilidade</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 03 — O QUE É A FERRAMENTA
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--gray" id="s03">
+      <header class="sh">
+        <div class="badge c">01</div>
+        <div class="ht">
+          <div class="slbl">Visão geral da ferramenta</div>
+          <h2>Calculadora de <em>Aderência Metodológica 2.0</em></h2>
+        </div>
+      </header>
+      <div class="sb">
+        <p class="lead">
+          A <strong>Calculadora de Aderência Metodológica 2.0</strong> é uma ferramenta analítica do ecossistema
+          <strong>SIGMA-PLI</strong> que avalia, de forma estruturada e auditável, o quão adequado cada
+          indicador é para representar o fenômeno que se propõe a medir — gerando um
+          <strong>Índice de Aderência (IA)</strong> e uma classificação metodológica padronizada.
+        </p>
+        <div class="box u-box-deep">
+          <div class="blbl u-blbl-deep">Proposta de abordagem metodológica</div>
+          <p>Esta ferramenta é uma <strong>proposta de abordagem metodológica</strong> para a definição <strong>colaborativa, transparente e auditável</strong> do grau de associação de cada indicador ao fenômeno que se propõe a medir. Ao tornar explícitos os critérios, os pesos e as justificativas de cada nota, a Calculadora cria condições para o debate técnico fundamentado entre equipes e para a rastreabilidade das escolhas analíticas — requisitos essenciais à legitimidade de estudos de planejamento territorial.</p>
+        </div>
+        <div class="cards">
+          <div class="card c-deep">
+            <div class="icon">🎯</div>
+            <div class="cname">Para que serve</div>
+            <div class="cdesc">Avaliar a qualidade metodológica de indicadores antes de incorporá-los a um estudo, plano ou diagnóstico territorial.</div>
+          </div>
+          <div class="card">
+            <div class="icon">📋</div>
+            <div class="cname">O que ela produz</div>
+            <div class="cdesc">Um Índice de Aderência (0–5), uma classificação padronizada e uma análise de sensibilidade para cada indicador avaliado.</div>
+          </div>
+          <div class="card c-green">
+            <div class="icon">🔍</div>
+            <div class="cname">Como funciona</div>
+            <div class="cdesc">O avaliador atribui notas (0–5) a 7 critérios metodológicos, guiado por rubricas descritivas. A ferramenta calcula o IA ponderado.</div>
+          </div>
+          <div class="card">
+            <div class="icon">🏛️</div>
+            <div class="cname">Contexto de uso</div>
+            <div class="cdesc">Integrada ao fluxo do PLI-SP 2050 para validar indicadores de mobilidade, logística, desenvolvimento e infraestrutura estadual.</div>
+          </div>
+          <div class="card c-deep">
+            <div class="icon">📤</div>
+            <div class="cname">Saídas</div>
+            <div class="cdesc">Relatório consolidado com notas, pesos, sensibilidade e classificação — exportável em CSV e JSON para integração ao SIGMA-PLI.</div>
+          </div>
+        </div>
+        <div class="box green-box">
+          <div class="blbl">Diferencial da versão 2.0</div>
+          <p>Fluxo <strong>multipágina e autônomo</strong> com persistência local no navegador — sem dependência de servidores ou versões anteriores.
+          Suporta importação via CSV, avaliação guiada por rubricas e exportação auditável de todos os resultados.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 04 — CONCEITO DE ADERÊNCIA
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--white" id="s04">
+      <header class="sh accent">
+        <div class="badge c">02</div>
+        <div class="ht">
+          <div class="slbl">Conceito central</div>
+          <h2>O que é <em>Aderência Metodológica</em> e como ela é medida</h2>
+        </div>
+      </header>
+      <div class="sb">
+        <p class="lead">
+          <strong>Aderência Metodológica</strong> é o grau em que um indicador representa com fidelidade,
+          consistência e operacionalidade o fenômeno que pretende medir.
+          Quanto maior a aderência, maior a <strong>validade interna</strong> do indicador e menor o risco
+          de viés nos resultados analíticos.
+        </p>
+        <div class="fcard">
+          <div class="ftitle">Cálculo do Índice de Aderência (IA) — equação geral e exemplo passo a passo</div>
+          <div class="fsteps">
+            <div class="fstep">IA = &Sigma;&thinsp;(nota&#7522; &times; peso&#7522;) / 100</div>
+            <span class="farrow">&rarr;</span>
+            <div class="fstep">nota&#7522; &isin; {0, 1, 2, 3, 4, 5}</div>
+            <span class="farrow">e</span>
+            <div class="fstep">&Sigma;&thinsp;peso&#7522; = 100</div>
+            <span class="farrow">&rarr;</span>
+            <div class="fstep">IA &isin; [0 ; 5]</div>
+          </div>
+          <div class="ftitle u-mt-075">Exemplo — "Fluxo de carga estadual" como proxy de conectividade logística (notas hipotéticas)</div>
+          <div class="u-formula-grid-7">
+            <span class="u-formula-hint">—</span>
+            <span class="u-formula-hint-center">P.Conc.</span>
+            <span class="u-formula-hint-center">M.Causal</span>
+            <span class="u-formula-hint-center">Val.Emp.</span>
+            <span class="u-formula-hint-center">Espec.</span>
+            <span class="u-formula-hint-center">Sensib.</span>
+            <span class="u-formula-hint-center">Mensur.</span>
+            <span class="u-formula-hint-center">C.Ben.</span>
+            <span class="u-formula-subhint">peso (%)</span>
+            <span class="u-center">30</span><span class="u-center">20</span><span class="u-center">15</span><span class="u-center">10</span><span class="u-center">10</span><span class="u-center">10</span><span class="u-center">5</span>
+            <span class="u-formula-subhint">nota</span>
+            <span class="u-center">4</span><span class="u-center">4</span><span class="u-center">3</span><span class="u-center">3</span><span class="u-center">3</span><span class="u-center">4</span><span class="u-center">3</span>
+            <span class="u-formula-subhint">nota &times; peso</span>
+            <span class="u-positive">120</span>
+            <span class="u-positive">80</span>
+            <span class="u-positive">45</span>
+            <span class="u-positive">30</span>
+            <span class="u-positive">30</span>
+            <span class="u-positive">40</span>
+            <span class="u-positive">15</span>
+          </div>
+          <span class="fresult">IA = (120+80+45+30+30+40+15) / 100 = 360 / 100 = <strong>3,60 &rarr; Proxy Forte</strong> ✓</span>
+        </div>
+        <div class="u-row-12">
+          <div class="box warn-box u-flex-15">
+            <div class="blbl">Critérios Eliminatórios</div>
+            <p>Independentemente do IA calculado, um indicador é classificado como <strong>Incerto/Espúrio</strong>
+            se a nota em <em>Proximidade Conceitual</em> ou <em>Mecanismo Causal</em> for inferior a
+            <strong>2</strong>. Esses dois critérios são condição necessária — sem eles, nenhum peso compensa
+            a deficiência estrutural do indicador.</p>
+          </div>
+          <div class="box u-flex-1">
+            <div class="blbl">O que a aderência NÃO é</div>
+            <p>Aderência não é popularidade do indicador nem facilidade de coleta. Um indicador amplamente
+            usado pode ter baixa aderência ao fenômeno específico do estudo. A ferramenta avalia
+            adequação contextual — não reputação geral.</p>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tg">Índice 0–5</span>
+          <span class="tg b">Ponderado</span>
+          <span class="tg g">7 critérios</span>
+          <span class="tg w">2 eliminatórios</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 05 — OS 7 CRITÉRIOS
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--gray" id="s05">
+      <header class="sh">
+        <div class="badge c">03</div>
+        <div class="ht">
+          <div class="slbl">Estrutura de avaliação</div>
+          <h2>Os <em>7 Critérios</em> de avaliação metodológica e seus pesos</h2>
+        </div>
+      </header>
+      <div class="sb">
+        <table class="t-crit">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Critério</th>
+              <th>O que avalia</th>
+              <th>Peso</th>
+              <th>Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><strong>Proximidade Conceitual</strong></td>
+              <td>Alinhamento direto entre o conceito do indicador e o fenômeno estudado</td>
+              <td>
+                <div class="peso-bar">
+                  <div class="bar-bg"><div class="bar-fill w-100"></div></div>
+                  <span class="peso-val">30%</span>
+                </div>
+              </td>
+              <td><span class="elim-badge">ELIMINATÓRIO ≥2</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>Mecanismo Causal</strong></td>
+              <td>Força da relação causal entre o fenômeno e a métrica utilizada</td>
+              <td>
+                <div class="peso-bar">
+                  <div class="bar-bg"><div class="bar-fill w-67"></div></div>
+                  <span class="peso-val">20%</span>
+                </div>
+              </td>
+              <td><span class="elim-badge">ELIMINATÓRIO ≥2</span></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>Validade Empírica</strong></td>
+              <td>Evidências empíricas e consistência estatística de associação com o fenômeno</td>
+              <td>
+                <div class="peso-bar">
+                  <div class="bar-bg"><div class="bar-fill w-50"></div></div>
+                  <span class="peso-val">15%</span>
+                </div>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>Especificidade</strong></td>
+              <td>Isolamento do fenômeno-alvo de variáveis externas confundidoras</td>
+              <td>
+                <div class="peso-bar">
+                  <div class="bar-bg"><div class="bar-fill w-33"></div></div>
+                  <span class="peso-val">10%</span>
+                </div>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>Sensibilidade</strong></td>
+              <td>Reatividade do indicador a variações reais no tempo e no espaço</td>
+              <td>
+                <div class="peso-bar">
+                  <div class="bar-bg"><div class="bar-fill w-33"></div></div>
+                  <span class="peso-val">10%</span>
+                </div>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><strong>Mensurabilidade</strong></td>
+              <td>Disponibilidade, precisão e replicabilidade dos dados para coleta</td>
+              <td>
+                <div class="peso-bar">
+                  <div class="bar-bg"><div class="bar-fill w-33"></div></div>
+                  <span class="peso-val">10%</span>
+                </div>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><strong>Custo-Benefício</strong></td>
+              <td>Relação entre o esforço de coleta e o valor analítico gerado pelo indicador</td>
+              <td>
+                <div class="peso-bar">
+                  <div class="bar-bg"><div class="bar-fill w-17"></div></div>
+                  <span class="peso-val">5%</span>
+                </div>
+              </td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="box">
+          <div class="blbl">Lógica de ponderação e embasamento metodológico</div>
+          <p>Os pesos refletem uma hierarquia conceitual: sem <strong>proximidade conceitual</strong> e
+          <strong>mecanismo causal</strong> robustos (50% do IA), os demais critérios não salvam o indicador.
+          Os critérios derivam de frameworks consolidados: <em>Bradford Hill</em> (1965) para causalidade e especificidade;
+          <em>SMART</em> (Doran, 1981) para mensurabilidade; o <em>Handbook OCDE</em> (Nardo et al., 2008) para
+          ponderação de indicadores compostos; e <em>Saltelli et al.</em> (2004) para a análise de sensibilidade.
+          Ver slide de Referências para detalhes completos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 06 — SISTEMA DE NOTAS E RUBRICAS
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--white" id="s06">
+      <header class="sh">
+        <div class="badge c">04</div>
+        <div class="ht">
+          <div class="slbl">Método de avaliação</div>
+          <h2>Escala de notas, <em>rubricas descritivas</em> e critérios especiais</h2>
+        </div>
+      </header>
+      <div class="sb">
+        <p class="lead">
+          Cada critério recebe uma nota inteira de <strong>0 a 5</strong>, acompanhada de uma
+          <strong>rubrica descritiva específica</strong> — texto que orienta o avaliador sobre o que cada
+          nível representa para aquele critério em particular. Não há interpretação genérica: as rubricas
+          são individualizadas por critério.
+        </p>
+        <div class="nota-scale">
+          <div class="nota-item n0">
+            <div class="nval">0</div>
+            <div class="nrub">Ausência total da qualidade avaliada</div>
+          </div>
+          <div class="nota-item n1">
+            <div class="nval">1</div>
+            <div class="nrub">Relação muito fraca ou tangencial</div>
+          </div>
+          <div class="nota-item n2">
+            <div class="nval">2</div>
+            <div class="nrub">Relação parcial, com limitações relevantes</div>
+          </div>
+          <div class="nota-item n3">
+            <div class="nval">3</div>
+            <div class="nrub">Relação moderada, com ressalvas documentadas</div>
+          </div>
+          <div class="nota-item n4">
+            <div class="nval">4</div>
+            <div class="nrub">Relação forte, com pequenas limitações</div>
+          </div>
+          <div class="nota-item n5">
+            <div class="nval">5</div>
+            <div class="nrub">Relação direta, inequívoca e amplamente comprovada</div>
+          </div>
+        </div>
+        <div class="u-row-12">
+          <div class="box warn-box u-flex-1">
+            <div class="blbl">Notas que exigem justificativa obrigatória</div>
+            <p>As notas extremas <strong>0</strong> e <strong>1</strong> (insuficiências críticas) e a nota
+            <strong>5</strong> (excelência máxima) exigem justificativa textual obrigatória.
+            Este mecanismo garante rastreabilidade e reduz o risco de atribuições arbitrárias nos extremos da escala.</p>
+          </div>
+          <div class="box u-flex-1">
+            <div class="blbl">Gatilho eliminatório</div>
+            <p>Se <strong>Proximidade Conceitual</strong> ou <strong>Mecanismo Causal</strong> receber nota
+            <strong>0 ou 1</strong>, o indicador é automaticamente classificado como
+            <strong>Incerto/Espúrio</strong>, independentemente das demais notas.
+            Este gatilho é calculado na etapa de resultados e registrado no relatório final.</p>
+          </div>
+        </div>
+        <div class="box green-box">
+          <div class="blbl">Exemplo de rubrica — Proximidade Conceitual, nota 3</div>
+          <p>"Relação moderada — o indicador capta parte relevante do fenômeno, mas mede aspectos correlatos em vez do fenômeno em si. Há sobreposição conceitual parcial."
+          <br><em>Aplicação PLI: densidade habitacional como proxy de demanda logística urbana — correlação razoável, mas outros fatores não capturados.</em></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 07 — FLUXO DA FERRAMENTA
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--gray" id="s07">
+      <header class="sh accent">
+        <div class="badge c">05</div>
+        <div class="ht">
+          <div class="slbl">Arquitetura da solução</div>
+          <h2>Fluxo operacional — <em>3 etapas</em> do módulo</h2>
+        </div>
+      </header>
+      <div class="sb">
+        <div class="steps">
+          <div class="step">
+            <div class="step-conn">
+              <div class="step-circle">1</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-txt">
+              <strong>Etapa 1 — Entrada de Indicadores</strong>
+              <span>O avaliador cadastra a ficha mínima de cada indicador: nome, descrição, área temática, unidade de medida e fonte. O cadastro pode ser feito manualmente ou via importação de arquivo <strong>CSV</strong> com cabeçalho padronizado.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-conn">
+              <div class="step-circle">2</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-txt">
+              <strong>Etapa 2 — Avaliação por Critérios</strong>
+              <span>Para cada indicador, o avaliador atribui notas (0–5) aos 7 critérios, orientado pelas rubricas descritivas específicas. Notas extremas exigem justificativas. Cada indicador recebe um <strong>IA parcial</strong> em tempo real.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-conn">
+              <div class="step-circle">3</div>
+            </div>
+            <div class="step-txt">
+              <strong>Etapa 3 — Resultados e Exportação</strong>
+              <span>Consolidação automática com: IA final ponderado, classificação metodológica, análise de sensibilidade, médias por critério, ranking dos indicadores e exportações em <strong>CSV e JSON</strong> para integração ao SIGMA-PLI.</span>
+            </div>
+          </div>
+        </div>
+        <div class="u-row-09-mt04">
+          <div class="box u-flex-1">
+            <div class="blbl">Persistência local</div>
+            <p>Todo o estado da sessão — indicadores, notas, justificativas e metadados da avaliação — é persistido automaticamente no <strong>localStorage</strong> do navegador. O progresso não se perde ao fechar ou recarregar a página.</p>
+          </div>
+          <div class="box green-box u-flex-1">
+            <div class="blbl">Rastreabilidade completa</div>
+            <p>Cada avaliação registra o nome do avaliador, o objeto de estudo, a data e todas as notas com suas justificativas. O relatório exportado é um documento técnico auditável, com todas as premissas explícitas.</p>
+          </div>
+          <div class="box warn-box u-flex-1">
+            <div class="blbl">Independência de versão</div>
+            <p>A versão 2.0 opera de forma completamente isolada. Não há dependência de APIs externas, banco de dados ou versões anteriores da calculadora — funciona integralmente no navegador do usuário.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 08 — CLASSIFICAÇÃO E SENSIBILIDADE
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--white" id="s08">
+      <header class="sh">
+        <div class="badge c">06</div>
+        <div class="ht">
+          <div class="slbl">Saídas analíticas</div>
+          <h2>Classificação metodológica e <em>análise de sensibilidade</em></h2>
+        </div>
+      </header>
+      <div class="sb">
+        <div class="cls-grid">
+          <div class="cls-card cls-a">
+            <div class="cls-range">≥ 4,0</div>
+            <div class="cls-label">Indicador Direto</div>
+            <div class="cls-desc">Mede diretamente o fenômeno de interesse. Alta confiabilidade analítica. Indicado para uso central no estudo.</div>
+          </div>
+          <div class="cls-card cls-b">
+            <div class="cls-range">3,0 – 3,9</div>
+            <div class="cls-label">Proxy Forte</div>
+            <div class="cls-desc">Fortemente associado ao fenômeno. Pode substituir indicadores diretos com ressalvas explicitadas no relatório.</div>
+          </div>
+          <div class="cls-card cls-c">
+            <div class="cls-range">2,0 – 2,9</div>
+            <div class="cls-label">Proxy Moderado</div>
+            <div class="cls-desc">Associação parcial. Uso aceitável apenas se combinado com outros indicadores e com limitações declaradas.</div>
+          </div>
+          <div class="cls-card cls-d">
+            <div class="cls-range">&lt; 2,0 ou eliminat.</div>
+            <div class="cls-label">Incerto / Espúrio</div>
+            <div class="cls-desc">Relação metodológica insuficiente. Não deve ser utilizado como indicador principal. Recomenda-se revisão ou substituição.</div>
+          </div>
+        </div>
+        <div class="u-row-12">
+          <div class="box u-flex-1">
+            <div class="blbl">Método OAT (One-At-a-Time)</div>
+            <p>A ferramenta aplica o método <strong>OAT</strong> (Saltelli et al., 2004): para cada critério <em>i</em>,
+            com os demais fixos no valor informado, a ferramenta testa nota<sub>i</sub>&minus;1 e
+            nota<sub>i</sub>+1 (limitadas ao intervalo [0 ; 5]) e recalcula o IA em cada cenário.
+            O resultado é a faixa <strong>[IA_mín ; IA_máx]</strong> mais a detecção de eventual mudança de classe.</p>
+          </div>
+          <div class="box green-box u-flex-1">
+            <div class="blbl">Por que a sensibilidade importa</div>
+            <p>Um indicador com IA = 3,1 (<em>Proxy Forte</em>) que, com −1 ponto em Proximidade Conceitual
+            (peso 30%), cai para IA = 2,8 (<em>Proxy Moderado</em>), exige atenção especial. A análise torna
+            visível a <strong>fragilidade classificatória</strong> — essencial para decisões técnicas robustas no PLI.</p>
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="ftitle">Exemplo OAT — IA base = 3,60 | PC=4, MC=4, VE=3, ES=3, SN=3, MN=4, CB=3</div>
+          <div class="u-formula-grid-6">
+            <span class="u-formula-hint-small">Critério (peso)</span>
+            <span class="u-formula-hint-small-center">nota&minus;1</span>
+            <span class="u-formula-hint-small-center">&Delta;IA(&minus;)</span>
+            <span class="u-formula-hint-small-center">IA&minus;</span>
+            <span class="u-formula-hint-small-center">nota+1</span>
+            <span class="u-formula-hint-small-center">&Delta;IA(+)</span>
+            <span class="u-formula-hint-small-center">IA+</span>
+            <span>P.Conceitual (30%)</span><span class="u-center">3</span><span class="u-negative">−0,30</span><span class="u-center">3,30</span><span class="u-center">5</span><span class="u-positive">+0,30</span><span class="u-center">3,90</span>
+            <span>M.Causal (20%)</span><span class="u-center">3</span><span class="u-negative">−0,20</span><span class="u-center">3,40</span><span class="u-center">5</span><span class="u-positive">+0,20</span><span class="u-center">3,80</span>
+            <span>Val.Empírica (15%)</span><span class="u-center">2</span><span class="u-negative">−0,15</span><span class="u-center">3,45</span><span class="u-center">4</span><span class="u-positive">+0,15</span><span class="u-center">3,75</span>
+            <span>Especificidade (10%)</span><span class="u-center">2</span><span class="u-negative">−0,10</span><span class="u-center">3,50</span><span class="u-center">4</span><span class="u-positive">+0,10</span><span class="u-center">3,70</span>
+          </div>
+          <span class="fresult">IA_mín = 3,30 | IA_máx = 3,90 — classe mantida em <strong>Proxy Forte</strong> → ESTÁVEL ✓</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 09 — EXEMPLO NO CONTEXTO PLI
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--gray" id="s09">
+      <header class="sh accent">
+        <div class="badge c">EX</div>
+        <div class="ht">
+          <div class="slbl">Exemplo ilustrativo de aplicação</div>
+          <h2>Avaliação de indicadores no contexto do <em>PLI-SP 2050</em></h2>
+        </div>
+      </header>
+      <div class="sb">
+        <table class="t-rank">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Indicador</th>
+              <th>Área</th>
+              <th>IA</th>
+              <th>Score</th>
+              <th>Classificação</th>
+              <th>Sensibilidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><strong>Densidade rodoviária</strong> — km de rodovias por km² de área territorial</td>
+              <td>Transporte</td>
+              <td class="ia-gd">4,2</td>
+              <td>
+                <div class="score-bar">
+                  <div class="bar-bg"><div class="bar-fill w-84"></div></div>
+                  <span class="score-val">84%</span>
+                </div>
+              </td>
+              <td><span class="cls-badge cb-a">Direto</span></td>
+              <td class="status-good">Estável</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>Volume de carga transportada</strong> — toneladas/ano nos corredores estaduais</td>
+              <td>Logística</td>
+              <td class="ia-blue">3,6</td>
+              <td>
+                <div class="score-bar">
+                  <div class="bar-bg"><div class="bar-fill w-72"></div></div>
+                  <span class="score-val">72%</span>
+                </div>
+              </td>
+              <td><span class="cls-badge cb-b">Proxy Forte</span></td>
+              <td class="status-good">Estável</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>Índice de acessibilidade municipal</strong> — distância ao nó logístico mais próximo</td>
+              <td>Mobilidade</td>
+              <td class="ia-blue">3,2</td>
+              <td>
+                <div class="score-bar">
+                  <div class="bar-bg"><div class="bar-fill w-64"></div></div>
+                  <span class="score-val">64%</span>
+                </div>
+              </td>
+              <td><span class="cls-badge cb-b">Proxy Forte</span></td>
+              <td class="status-warn">⚠ Instável</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>Taxa de crescimento populacional</strong> — variação anual da população municipal</td>
+              <td>Demografia</td>
+              <td class="ia-warn">2,4</td>
+              <td>
+                <div class="score-bar">
+                  <div class="bar-bg"><div class="bar-fill w-48"></div></div>
+                  <span class="score-val">48%</span>
+                </div>
+              </td>
+              <td><span class="cls-badge cb-c">Proxy Moderado</span></td>
+              <td class="status-warn">⚠ Instável</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>Nota fiscal eletrônica emitida</strong> — volume de NF-e por município/ano</td>
+              <td>Economia</td>
+              <td class="ia-warn">2,1</td>
+              <td>
+                <div class="score-bar">
+                  <div class="bar-bg"><div class="bar-fill w-42"></div></div>
+                  <span class="score-val">42%</span>
+                </div>
+              </td>
+              <td><span class="cls-badge cb-c">Proxy Moderado</span></td>
+              <td class="status-bad">⚠ Instável</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><strong>Altitude média do município</strong> — dados altimétricos SRTM/IBGE</td>
+              <td>Geom. física</td>
+              <td class="ia-bad">0,9</td>
+              <td>
+                <div class="score-bar">
+                  <div class="bar-bg"><div class="bar-fill w-18"></div></div>
+                  <span class="score-val">18%</span>
+                </div>
+              </td>
+              <td><span class="cls-badge cb-d">Incerto/Espúrio</span></td>
+              <td class="status-bad">Eliminatório</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="cta-box">
+          <div>
+            <div class="ct">Acesse a ferramenta</div>
+            <p>Calculadora de Aderência Metodológica 2.0 disponível no ecossistema SIGMA-PLI — avalie indicadores com rastreabilidade completa e resultados exportáveis.</p>
+          </div>
+          <a class="btn" href="./home.html" target="_blank" rel="noopener noreferrer">
+            Abrir Calculadora 2.0 →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SLIDE 10 — REFERÊNCIAS BIBLIOGRÁFICAS
+    ══════════════════════════════════════════════════════ -->
+    <section class="slide slide--white" id="s10">
+      <header class="sh accent">
+        <div class="badge c">REF</div>
+        <div class="ht">
+          <div class="slbl">Fundamentação bibliográfica</div>
+          <h2>Referências que <em>embasam os critérios</em> e a abordagem metodológica</h2>
+        </div>
+      </header>
+      <div class="sb">
+        <p class="lead">
+          Os 7 critérios de avaliação, seus pesos e a metodologia de sensibilidade baseiam-se nas seguintes
+          referências científicas e técnicas reconhecidas internacionalmente.
+        </p>
+        <ul class="chk">
+          <li>
+            <strong>[1] Bradford Hill, A. (1965).</strong> "The Environment and Disease: Association or Causation?"
+            <em>Proceedings of the Royal Society of Medicine</em>, 58(5), 295–300.
+            → Fundamenta os critérios de <em>Proximidade Conceitual</em>, <em>Mecanismo Causal</em> e <em>Especificidade</em>
+            (critérios de causalidade e associação fenômeno–indicador).
+          </li>
+          <li>
+            <strong>[2] Doran, G.T. (1981).</strong> "There's a S.M.A.R.T. way to write management's goals and objectives."
+            <em>Management Review</em>, 70(11), 35–36.
+            → Fundamenta os critérios de <em>Mensurabilidade</em> e <em>Especificidade</em>
+            (clareza operacional e quantificabilidade do indicador).
+          </li>
+          <li>
+            <strong>[3] Nardo, M. et al. / OECD (2008).</strong> <em>Handbook on Constructing Composite Indicators:
+            Methodology and User Guide</em>. OECD Statistics Working Paper STD/DOC(2005)3.
+            → Fundamenta a <em>ponderação dos critérios</em> e o cálculo do Índice de Aderência (IA)
+            como indicador composto ponderado.
+          </li>
+          <li>
+            <strong>[4] Saltelli, A.; Tarantola, S.; Campolongo, F.; Ratto, M. (2004).</strong>
+            <em>Sensitivity Analysis in Practice: A Guide to Assessing Scientific Models</em>.
+            John Wiley &amp; Sons. DOI: 10.1002/0470870958.
+            → Fundamenta a <em>Análise de Sensibilidade OAT</em> (One-At-a-Time) aplicada à perturbação unitária por critério.
+          </li>
+          <li>
+            <strong>[5] Ross, D.A.; Morrow, R.H.; Smith, P.G. (2015).</strong>
+            <em>Field Trials of Health Interventions: A Toolbox</em>, 3ª ed. Oxford University Press.
+            → Fundamenta o critério de <em>Validade Empírica</em> — uso de indicadores substitutos (proxy/surrogate endpoints)
+            com lastro em estudos anteriores.
+          </li>
+          <li>
+            <strong>[6] UN Statistics Division (2014).</strong>
+            <em>Fundamental Principles of Official Statistics</em>. United Nations.
+            → Fundamenta os critérios de <em>Mensurabilidade</em> e <em>Custo-Benefício</em>
+            (disponibilidade de dados e viabilidade operacional de coleta).
+          </li>
+        </ul>
+        <div class="box green-box u-mt-06">
+          <div class="blbl">Nota metodológica</div>
+          <p>A seleção dos 7 critérios e seus respectivos pesos constitui uma <strong>proposta</strong> —
+          não uma norma técnica consolidada. Os pesos podem ser revisados mediante consenso documentado entre
+          os especialistas do PLI, desde que a revisão seja registrada e justificada no relatório de avaliação.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const deck   = document.getElementById('deck');
+    const dots   = document.querySelectorAll('.dot');
+    const ctr    = document.getElementById('ctr');
+    const pb     = document.getElementById('pb');
+    const slides = document.querySelectorAll('.slide');
+    const total  = slides.length;
+
+    function updateUI(idx) {
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      ctr.textContent = `${idx + 1} / ${total}`;
+      pb.style.height = `${((idx + 1) / total) * 100}%`;
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          updateUI(Array.from(slides).indexOf(e.target));
+        }
+      });
+    }, { root: deck, threshold: 0.55 });
+
+    slides.forEach(s => obs.observe(s));
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const idx = Array.from(dots).findIndex(d => d.classList.contains('active'));
+      if ((e.key === 'ArrowDown' || e.key === 'ArrowRight') && idx < total - 1) {
+        slides[idx + 1].scrollIntoView({ behavior: 'smooth' });
+      } else if ((e.key === 'ArrowUp' || e.key === 'ArrowLeft') && idx > 0) {
+        slides[idx - 1].scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    updateUI(0);
+  </script>
+</body>
+</html>

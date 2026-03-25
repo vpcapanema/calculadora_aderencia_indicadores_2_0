@@ -2,29 +2,38 @@
   "use strict";
 
   function buildHeader(target) {
-    var subtitle = target.dataset.appSubtitle || "Aplicação Analítica";
-    var section = target.dataset.appSection || "Módulo";
+    fetch("./templates_modelo/cabecalho_fragment.html")
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, "text/html");
 
-    target.className = "app-shell-header";
-    target.innerHTML = "" +
-      '<div class="app-shell-govbar"><div class="app-shell-govbar__inner"><span class="app-shell-govbar__title">Governo do Estado de São Paulo</span><span class="app-shell-govbar__meta">SIGMA-PLI • ' + section + '</span></div></div>' +
-      '<div class="app-shell-navbar"><div class="app-shell-navbar__inner">' +
-      '<a class="app-shell-brand" href="./home.html"><span class="app-shell-brand__badge">Σ</span><span class="app-shell-brand__copy"><span class="app-shell-brand__title">SIGMA-PLI</span><span class="app-shell-brand__subtitle">' + subtitle + '</span></span></a>' +
-      '<ul class="app-shell-nav"><li><a href="./home.html" data-shell-link="home">Entrada</a></li><li><a href="./avaliacao.html" data-shell-link="avaliacao">Avaliação</a></li><li><a href="./resultados.html" data-shell-link="resultados">Resultados</a></li><li><button type="button" class="app-shell-action" id="btnShellReset">Limpar sessão</button></li></ul>' +
-      '</div></div>';
+        /* ── Injetar <style> no <head> ── */
+        var styles = doc.querySelectorAll("style");
+        styles.forEach(function (s) {
+          document.head.appendChild(document.adoptNode(s));
+        });
 
-    var filename = (window.location.pathname.split("/").pop() || "home.html").toLowerCase();
-    var map = { "home.html": "home", "avaliacao.html": "avaliacao", "resultados.html": "resultados" };
-    var activeLink = target.querySelector('[data-shell-link="' + map[filename] + '"]');
-    if (activeLink) { activeLink.classList.add("is-active"); }
+        /* ── Injetar wrapper .sigma-cabecalho-fixo antes do target ── */
+        var wrapper = doc.querySelector(".sigma-cabecalho-fixo");
+        if (wrapper) {
+          target.parentNode.insertBefore(document.adoptNode(wrapper), target);
+        }
 
-    var resetButton = target.querySelector("#btnShellReset");
-    if (resetButton) {
-      resetButton.addEventListener("click", function () {
-        window.CalculadoraAderenciaApp.clearAll();
-        window.location.href = "./home.html";
+        /* ── Re-executar scripts (DOMParser não os executa) ── */
+        var scripts = doc.querySelectorAll("script");
+        scripts.forEach(function (old) {
+          var s = document.createElement("script");
+          s.textContent = old.textContent;
+          document.body.appendChild(s);
+        });
+
+        /* ── Remover placeholder antigo ── */
+        target.remove();
+      })
+      .catch(function (err) {
+        console.error("Falha ao carregar cabeçalho:", err);
       });
-    }
   }
 
   function buildFooter(target) {
