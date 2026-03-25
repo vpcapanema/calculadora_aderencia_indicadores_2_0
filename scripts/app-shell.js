@@ -14,10 +14,16 @@
           document.head.appendChild(document.adoptNode(s));
         });
 
-        /* ── Injetar wrapper .sigma-cabecalho-fixo antes do target ── */
+        /* ── Injetar cabeçalho fixo e seu espaçador antes do target ── */
         var wrapper = doc.querySelector(".sigma-cabecalho-fixo");
+        var spacer = doc.querySelector(".sigma-cabecalho-espacador");
         if (wrapper) {
-          target.parentNode.insertBefore(document.adoptNode(wrapper), target);
+          var parent = target.parentNode;
+          var insertedWrapper = document.adoptNode(wrapper);
+          parent.insertBefore(insertedWrapper, target);
+          if (spacer) {
+            parent.insertBefore(document.adoptNode(spacer), target);
+          }
         }
 
         /* ── Re-executar scripts (DOMParser não os executa) ── */
