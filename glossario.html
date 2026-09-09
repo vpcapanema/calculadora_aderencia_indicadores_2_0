@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glossário — Calculadora de Aderência Metodológica 2.0</title>
+<link rel="stylesheet" href="./templates_modelo/style_global_reset_base.css">
+<link rel="stylesheet" href="./templates_modelo/style_template_base_aplicacao.css">
+<link rel="stylesheet" href="./styles/app.css">
+<style>body.glossary-page {font-family:var(--pli-font-primary);background:var(--sigma-page-background,#eef1f5);}</style>
+<style>
+.glossary { --gl-primary:var(--pli-deep,#003b5a);--gl-accent:var(--pli-green,#3ec26e);--gl-text:var(--pli-text-main,#263746);--gl-surface:white;--gl-border:var(--pli-border,#d5dce6);--gl-radius:var(--pli-radius-md,8px); }
+
+/* Componentes do glossário: cores e fontes vêm do tema da aplicação. */
+body.glossary-page { display:block; width:auto; height:auto; min-height:100vh; overflow:auto; margin:0; padding:0; }
+.glossary { box-sizing:border-box; width:calc(100% - 2rem); max-width:1120px; margin:2rem auto; padding:0; line-height:1.65; color:var(--gl-text); }
+.glossary *, .glossary *::before, .glossary *::after { box-sizing:border-box; }
+.glossary .gl-heading { padding:1.5rem 0; margin:0 0 1.5rem; border-bottom:3px solid var(--gl-accent); background:none; text-align:left; }
+.glossary .gl-brand { margin:0 0 .5rem; color:var(--gl-primary); font-weight:700; letter-spacing:.04em; }
+.glossary h1 { color:var(--gl-primary); font-size:clamp(1.6rem,4vw,2.25rem); line-height:1.2; margin:.5rem 0 1rem; text-align:left; }
+.glossary h2 { color:var(--gl-primary); font-size:1.15rem; line-height:1.4; margin:0 0 1rem; padding:0; border:0; text-align:left; }
+.glossary a { color:var(--gl-primary); text-decoration:underline; text-underline-offset:3px; }
+.glossary .gl-layout { display:grid; grid-template-columns:260px minmax(0,1fr); gap:1.5rem; align-items:start; }
+.glossary .gl-sidebar { position:sticky; top:1rem; background:var(--gl-surface); border:1px solid var(--gl-border); border-radius:var(--gl-radius); padding:1rem; min-width:0; }
+.glossary .gl-search { margin:0 0 1rem; display:block; }
+.glossary label { display:block; font-weight:600; margin:0 0 .5rem; }
+.glossary input { display:block; width:100%; min-height:44px; padding:.6rem; font:inherit; border:1px solid var(--gl-border); border-radius:4px; background:var(--gl-surface); color:var(--gl-text); }
+.glossary button { min-height:44px; padding:.5rem .8rem; margin:.6rem 0; font:inherit; cursor:pointer; background:var(--gl-primary); color:white; border:0; border-radius:4px; }
+.glossary .gl-count { font-size:.9em; margin:0; }
+.glossary summary { cursor:pointer; font-weight:700; color:var(--gl-primary); padding:.5rem 0; }
+.glossary .gl-index { max-height:50vh; overflow:auto; background:none; position:static; display:block; padding:0; margin:0; }
+.glossary .gl-index a { display:block; padding:.3rem 0; font-size:.9em; }
+.glossary .gl-group { padding:1.4rem; margin:0 0 1.25rem; background:var(--gl-surface); border:1px solid var(--gl-border); border-top:3px solid var(--gl-accent); border-radius:var(--gl-radius); box-shadow:none; }
+.glossary dl { margin:0; }
+.glossary .gl-entry { padding:1rem 0; border-top:1px solid var(--gl-border); scroll-margin-top:1.5rem; overflow-wrap:anywhere; }
+.glossary dt { font-weight:700; margin:0 0 .4rem; }
+.glossary dd { margin:0; text-align:left; }
+.glossary .gl-entry:target { outline:2px solid var(--gl-primary); outline-offset:6px; }
+.glossary :focus-visible { outline:3px solid var(--gl-primary); outline-offset:3px; }
+.glossary [hidden] { display:none !important; }
+.glossary .gl-note { font-size:.9em; margin:1.5rem 0; }
+@media(max-width:760px) { .glossary .gl-layout { grid-template-columns:minmax(0,1fr); } .glossary .gl-sidebar { position:static; } .glossary .gl-index { max-height:180px; } .glossary .gl-group { padding:1rem; } }
+@media print { .glossary .gl-sidebar, .glossary .gl-back { display:none; } .glossary .gl-layout { display:block; } .glossary .gl-entry { break-inside:avoid; } }
+
+</style>
+</head>
+<body class="glossary-page">
+<main class="glossary" id="glossario">
+  <header class="gl-heading">
+    <p class="gl-brand">Calculadora de Aderência Metodológica 2.0</p>
+    <a class="gl-back" href="home.html">← Voltar à aplicação</a>
+    <h1>Glossário técnico-conceitual</h1>
+    <p>Termos e conceitos para compreender e utilizar Calculadora de Aderência Metodológica 2.0.</p>
+  </header>
+  <div class="gl-layout">
+    <aside class="gl-sidebar" aria-label="Consulta ao glossário">
+      <form class="gl-search" role="search" hidden>
+        <label for="gl-search">Buscar termo ou conceito</label>
+        <input id="gl-search" type="search" autocomplete="off" aria-controls="gl-content">
+        <button type="reset">Limpar busca</button>
+        <p class="gl-count" role="status" aria-live="polite"></p>
+      </form>
+      <details open><summary>Índice de termos</summary><nav class="gl-index" aria-label="Termos"><a data-term="termo-indicador" href="#termo-indicador">Indicador</a> <a data-term="termo-objeto-de-estudo" href="#termo-objeto-de-estudo">Objeto de estudo</a> <a data-term="termo-unidade-de-medida" href="#termo-unidade-de-medida">Unidade de medida</a> <a data-term="termo-fonte" href="#termo-fonte">Fonte</a> <a data-term="termo-aderencia-metodologica" href="#termo-aderencia-metodologica">Aderência metodológica</a> <a data-term="termo-criterio" href="#termo-criterio">Critério</a> <a data-term="termo-rubrica" href="#termo-rubrica">Rubrica</a> <a data-term="termo-nota" href="#termo-nota">Nota</a> <a data-term="termo-peso" href="#termo-peso">Peso</a> <a data-term="termo-criterio-eliminatorio" href="#termo-criterio-eliminatorio">Critério eliminatório</a> <a data-term="termo-justificativa" href="#termo-justificativa">Justificativa</a> <a data-term="termo-consolidacao" href="#termo-consolidacao">Consolidação</a> <a data-term="termo-analise-de-sensibilidade" href="#termo-analise-de-sensibilidade">Análise de sensibilidade</a> <a data-term="termo-sessao-local" href="#termo-sessao-local">Sessão local</a> <a data-term="termo-csv" href="#termo-csv">CSV</a></nav></details>
+    </aside>
+    <div id="gl-content">
+      <p class="gl-empty" hidden>Nenhum termo encontrado. Tente outra palavra ou limpe a busca.</p>
+      <section class="gl-group"><h2>Cadastro e avaliação</h2><dl>
+<div class="gl-entry" id="termo-indicador" tabindex="-1"><dt><a href="#termo-indicador">Indicador</a></dt><dd>Medida submetida à avaliação de aderência metodológica, identificada por nome e descrição.</dd></div>
+<div class="gl-entry" id="termo-objeto-de-estudo" tabindex="-1"><dt><a href="#termo-objeto-de-estudo">Objeto de estudo</a></dt><dd>Tema ou fenômeno em relação ao qual os indicadores serão avaliados.</dd></div>
+<div class="gl-entry" id="termo-unidade-de-medida" tabindex="-1"><dt><a href="#termo-unidade-de-medida">Unidade de medida</a></dt><dd>Referência usada para expressar o valor do indicador, como quantidade, proporção ou distância.</dd></div>
+<div class="gl-entry" id="termo-fonte" tabindex="-1"><dt><a href="#termo-fonte">Fonte</a></dt><dd>Origem dos dados ou da informação que sustenta o indicador.</dd></div>
+<div class="gl-entry" id="termo-aderencia-metodologica" tabindex="-1"><dt><a href="#termo-aderencia-metodologica">Aderência metodológica</a></dt><dd>Grau de adequação de um indicador ao objeto e aos critérios definidos para a avaliação.</dd></div>
+<div class="gl-entry" id="termo-criterio" tabindex="-1"><dt><a href="#termo-criterio">Critério</a></dt><dd>Aspecto considerado para atribuir uma nota ao indicador.</dd></div>
+<div class="gl-entry" id="termo-rubrica" tabindex="-1"><dt><a href="#termo-rubrica">Rubrica</a></dt><dd>Descrição que orienta a atribuição de notas, explicitando o significado dos níveis de avaliação.</dd></div>
+<div class="gl-entry" id="termo-nota" tabindex="-1"><dt><a href="#termo-nota">Nota</a></dt><dd>Valor atribuído a um indicador em determinado critério, conforme a rubrica adotada.</dd></div>
+</dl></section><section class="gl-group"><h2>Pesos e resultados</h2><dl>
+<div class="gl-entry" id="termo-peso" tabindex="-1"><dt><a href="#termo-peso">Peso</a></dt><dd>Importância relativa de um critério na consolidação da avaliação.</dd></div>
+<div class="gl-entry" id="termo-criterio-eliminatorio" tabindex="-1"><dt><a href="#termo-criterio-eliminatorio">Critério eliminatório</a></dt><dd>Condição que pode impedir a aprovação de um indicador, independentemente de sua pontuação em outros critérios.</dd></div>
+<div class="gl-entry" id="termo-justificativa" tabindex="-1"><dt><a href="#termo-justificativa">Justificativa</a></dt><dd>Registro textual que fundamenta a nota ou decisão de avaliação.</dd></div>
+<div class="gl-entry" id="termo-consolidacao" tabindex="-1"><dt><a href="#termo-consolidacao">Consolidação</a></dt><dd>Reunião das avaliações e pesos para apresentar os resultados do conjunto de indicadores.</dd></div>
+<div class="gl-entry" id="termo-analise-de-sensibilidade" tabindex="-1"><dt><a href="#termo-analise-de-sensibilidade">Análise de sensibilidade</a></dt><dd>Exame da variação dos resultados quando parâmetros de avaliação são modificados.</dd></div>
+<div class="gl-entry" id="termo-sessao-local" tabindex="-1"><dt><a href="#termo-sessao-local">Sessão local</a></dt><dd>Conjunto de dados da avaliação mantido no navegador desta aplicação.</dd></div>
+<div class="gl-entry" id="termo-csv" tabindex="-1"><dt><a href="#termo-csv">CSV</a></dt><dd>Arquivo de texto tabular utilizado na importação ou exportação de indicadores, com campos separados por delimitadores.</dd></div>
+</dl></section>
+      <p class="gl-note">As definições contextualizam os termos utilizados nesta aplicação. Leia os resultados junto dos filtros, unidades, períodos e regras apresentados em cada tela.</p>
+      <a href="#glossario">Voltar ao início ↑</a>
+    </div>
+  </div>
+</main>
+<script>
+
+(() => {
+  const root = document.querySelector('.glossary');
+  if (!root) return;
+  const form = root.querySelector('.gl-search');
+  const input = root.querySelector('#gl-search');
+  const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
+  const entries = Array.from(root.querySelectorAll('.gl-entry'), element => ({ element, text: normalize(element.textContent), link: root.querySelector('[data-term="' + element.id + '"]') }));
+  const filter = () => {
+    const words = normalize(input.value).trim().split(/\s+/).filter(Boolean);
+    let visible = 0;
+    entries.forEach(({element, text, link}) => { const match = words.every(word => text.includes(word)); element.hidden = !match; link.hidden = !match; if(match) visible++; });
+    root.querySelectorAll('.gl-group').forEach(group => { group.hidden = !group.querySelector('.gl-entry:not([hidden])'); });
+    root.querySelector('.gl-count').textContent = visible + ' de ' + entries.length + ' termos';
+    root.querySelector('.gl-empty').hidden = visible !== 0;
+  };
+  const reveal = () => {
+    let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    const target = document.getElementById(id);
+    if (!target || !root.contains(target)) return;
+    if (target.closest('[hidden]')) { input.value = ''; filter(); }
+    target.scrollIntoView({block:'start'});
+  };
+  form.addEventListener('submit', event => event.preventDefault());
+  form.addEventListener('reset', event => { event.preventDefault(); input.value = ''; filter(); input.focus(); });
+  input.addEventListener('input', filter);
+  window.addEventListener('hashchange', reveal);
+  form.hidden = false; filter(); reveal();
+})();
+
+</script>
+</body>
+</html>
