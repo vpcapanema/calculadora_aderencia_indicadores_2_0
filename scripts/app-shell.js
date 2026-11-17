@@ -8,6 +8,12 @@
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, "text/html");
 
+        /* Ocultar a identidade institucional durante o periodo eleitoral. */
+        var governmentHeader = doc.querySelector(".govsp-topo");
+        if (governmentHeader) {
+          governmentHeader.remove();
+        }
+
         /* ── Injetar <style> no <head> ── */
         var styles = doc.querySelectorAll("style");
         styles.forEach(function (s) {
