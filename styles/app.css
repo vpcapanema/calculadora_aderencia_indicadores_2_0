@@ -9,11 +9,11 @@ body.app-template-page {
 
 /* Hero padrao das aplicacoes SIGMA-PLI. */
 .vw-header.page-hero {
-  width: min(1400px, calc(100vw - 32px));
-  max-width: none;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  max-width: 100%;
+  position: static;
+  left: auto;
+  transform: none;
   margin: 45px auto 24px;
   display: flex;
   flex-direction: column;
