@@ -13,7 +13,7 @@
   }
   function getBadgeClass(classificacao) { if (classificacao === "Direto") { return "app-badge app-badge--direto"; } if (classificacao === "Proxy Forte") { return "app-badge app-badge--proxy-forte"; } if (classificacao === "Proxy Moderado") { return "app-badge app-badge--proxy-moderado"; } return "app-badge app-badge--incerto"; }
   function renderResultados() {
-    var state = app.getState(); if (!state.indicadores.length) { window.location.href = "./home.html"; return; }
+    var state = app.getState(); if (!state.indicadores.length) { window.location.href = "./home"; return; }
     var resultados = app.buildResultados();
     if (!state.resultadosGerados) { $("tabelaResultados").querySelector("tbody").innerHTML = '<tr><td colspan="5">Consolide os resultados na etapa de avaliação para exibir esta tela.</td></tr>'; $("analiseCriterios").innerHTML = '<div class="app-empty-state">Os resultados finais ainda não foram gerados.</div>'; $("indiceGeralValue").textContent = "--"; $("classificacaoGeralValue").textContent = "--"; $("totalIndicadores").textContent = String(state.indicadores.length); return; }
     var indiceGeral = resultados.reduce(function (acc, item) { return acc + item.ia; }, 0) / resultados.length; var counts = {}; resultados.forEach(function (item) { counts[item.classificacao] = (counts[item.classificacao] || 0) + 1; }); var classificacaoPredominante = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; })[0];

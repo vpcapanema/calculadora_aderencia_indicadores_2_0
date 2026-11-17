@@ -11,7 +11,7 @@
       el.insertAdjacentHTML("afterbegin", icon(names[index] || "app-icon-info"));
     });
   }
-  function ensureData() { var state = app.getState(); if (!state.indicadores.length) { window.location.href = "./home.html"; return null; } return state; }
+  function ensureData() { var state = app.getState(); if (!state.indicadores.length) { window.location.href = "./home"; return null; } return state; }
   function renderCriteriaOverview() { $("criteriaOverview").innerHTML = app.CRITERIOS.map(function (criterio, index) { var isEliminatorio = app.LIMIARES_ELIMINATORIOS.some(function (item) { return item.criterioIndex === index; }); return '<article class="app-criterion-chip"><strong>' + criterio.nome + '</strong><span>' + criterio.explicacao + '</span><small>' + criterio.peso + '%</small>' + (isEliminatorio ? '<small>Critério eliminatório</small>' : '') + '</article>'; }).join(""); }
   function renderIndicadores() {
     var state = ensureData(); if (!state) { return; }
@@ -40,6 +40,6 @@
   }
   function limparAvaliacoes() { app.saveBaseState({ scores: {}, justificativas: {}, resultadosGerados: false }); renderIndicadores(); }
   function salvarProgresso() { var state = app.getState(); app.saveBaseState({ avaliador: state.avaliador, objetoEstudo: state.objetoEstudo, scores: state.scores, justificativas: state.justificativas, resultadosGerados: false }); var button = $("btnSalvar"); var original = button.textContent; button.textContent = "Salvo"; window.setTimeout(function () { button.textContent = original; }, 1200); }
-  function consolidarResultados() { var state = app.getState(); app.persistMetadados(state.avaliador, state.objetoEstudo); app.saveBaseState({ resultadosGerados: true }); window.location.href = "./resultados.html"; }
+  function consolidarResultados() { var state = app.getState(); app.persistMetadados(state.avaliador, state.objetoEstudo); app.saveBaseState({ resultadosGerados: true }); window.location.href = "./resultados"; }
   document.addEventListener("DOMContentLoaded", function () { if (!ensureData()) { return; } setTitleIcons(); renderCriteriaOverview(); renderIndicadores(); $("btnLimparAvaliacoes").addEventListener("click", limparAvaliacoes); $("btnSalvar").addEventListener("click", salvarProgresso); $("btnCalcular").addEventListener("click", consolidarResultados); });
 })();
