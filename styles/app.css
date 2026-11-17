@@ -9,6 +9,12 @@ body.app-template-page {
 
 /* Hero padrao das aplicacoes SIGMA-PLI. */
 .vw-header.page-hero {
+  width: min(1400px, calc(100vw - 2rem));
+  max-width: none;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 45px auto 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +37,7 @@ body.app-template-page {
 @media (max-width:768px) { .vw-header.page-hero .vw-header__title { font-size:1.15rem; } }
 
 .app-shell {
-  padding-top: 1.75rem;
+  padding-top: 0;
   padding-bottom: 2.25rem;
 }
 
